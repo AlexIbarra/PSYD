@@ -1,0 +1,63 @@
+#include <s3c44b0x.h>
+#include <s3cev40.h>
+#include <system.h>
+
+
+static void port_init() {
+
+	PDATA = ~0;
+	PCONA = ;
+	PDATB = ~0;
+	PCONB = ;
+	PDATC = ~0;
+	PCONC = ;
+	PUPC = ;
+	PDATD = ~0;
+	PCOND = ;
+	PUPD = ;
+	PDATE = ~0;
+	PCONE = ;
+	PUPE = ;
+	PDATF = ~0;
+	PCONF = ;
+	PUPF = ;
+	PDATG = ~0;
+	PCONG = ;
+	PUPG = ;
+	SPUCR = ;
+	EXTINT = ;
+}
+
+
+/*
+**  Inicializa el sistema
+**    Deshabilita el watchdog
+**    Enmascara todas las interrupciones
+**    Configura el gestor de reloj
+**      Tiempo de estabilización del PLL máximo
+**      MCLK = 64 MHz
+**      MCLK_SLOW = 500 KHz
+**      Modo de funcionamiento normal
+**      Reloj distribuido a todos los controladores
+**    Arbitro de bus con prioridades por defecto
+**    Cache deshabilitada
+**    Configura los puertos de E/S
+**    Configura el controlador de interrupciones
+**      Fija prioridades por defecto
+**      Todas las fuentes de interrupción en modo IRQ
+**      Instala dummy ISR
+**      Borra interrupciones pendientes externas e internas
+**      IRQ vectorizadas, linea IRQ activada, linea FIQ desactivada
+**  Inicializa el UART0
+**  Muestra información del sistema por la UART0
+*/
+void sys_init( void ){
+	port_init();
+}
+
+/*
+**  Pone el procesador en estado IDLE
+*/
+inline void sleep( void ){
+
+}

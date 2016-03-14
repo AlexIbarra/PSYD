@@ -1,0 +1,6 @@
+10:18:31 **** Clean-only build of configuration Debug for project BSP ****
+cs-make clean 
+cs-make: *** No rule to make target `clean'.  Stop.
+
+10:18:31 Build Finished (took 78ms)
+

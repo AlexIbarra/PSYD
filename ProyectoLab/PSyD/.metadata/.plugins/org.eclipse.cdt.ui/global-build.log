@@ -1,0 +1,34 @@
+10:21:51 **** Build of configuration Debug for project lab3 ****
+cs-make all 
+'Building file: ../lab3.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab3.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab3.d" -MT"lab3.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab3.o" "../lab3.c"
+../lab3.c:24:6: warning: return type of 'main' is not 'int'
+'Finished building: ../lab3.c'
+' '
+'Building target: lab3.elf'
+'Invoking: ARM Sourcery Windows GCC C Linker'
+arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab3\lab3.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab3.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab3.elf"  ./lab3.o   -lBSP
+./lab3.o: In function `main':
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:28: undefined reference to `sys_init'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:29: undefined reference to `segs_init'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:30: undefined reference to `leds_init'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:37: undefined reference to `led_on'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:38: undefined reference to `led_status'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:38: undefined reference to `segs_putchar'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:40: undefined reference to `led_off'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:41: undefined reference to `led_status'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:41: undefined reference to `segs_putchar'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:43: undefined reference to `led_on'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:44: undefined reference to `led_status'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:44: undefined reference to `segs_putchar'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:46: undefined reference to `led_off'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:47: undefined reference to `led_status'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:47: undefined reference to `segs_putchar'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:54: undefined reference to `led_toggle'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:55: undefined reference to `led_toggle'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:56: undefined reference to `segs_putchar'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:59: undefined reference to `led_off'
+C:\hlocal\PSyD\lab3\Debug/../lab3.c:60: undefined reference to `led_off'
+collect2: ld returned 1 exit status
+cs-make: *** [lab3.elf] Error 1

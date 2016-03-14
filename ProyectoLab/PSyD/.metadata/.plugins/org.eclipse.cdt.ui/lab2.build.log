@@ -1,0 +1,7 @@
+10:18:31 **** Clean-only build of configuration Debug for project lab2 ****
+cs-make clean 
+cs-rm -rf  lab2.siz  ./lab2.o  ./lab2.d  lab2.hex  lab2.lst  lab2.elf
+' '
+
+10:18:31 Build Finished (took 140ms)
+

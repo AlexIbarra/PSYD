@@ -102,9 +102,9 @@
  1037              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 lab2.c
-C:\Users\USUARI~1\AppData\Local\Temp\cc4a2Fhq.s:980    .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc4a2Fhq.s:983    .text:00000000 main
-C:\Users\USUARI~1\AppData\Local\Temp\cc4a2Fhq.s:1029   .text:00000060 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccE0Afya.s:980    .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccE0Afya.s:983    .text:00000000 main
+C:\Users\USUARI~1\AppData\Local\Temp\ccE0Afya.s:1029   .text:00000060 $d
                      .debug_frame:00000010 $d
 
 NO UNDEFINED SYMBOLS

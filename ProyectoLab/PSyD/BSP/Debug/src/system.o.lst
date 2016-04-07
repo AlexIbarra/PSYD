@@ -1,0 +1,283 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"system.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/system.c"
+ 1957              		.align	2
+ 1959              	port_init:
+ 1960              	.LFB0:
+   1:../src/system.c **** #include <s3c44b0x.h>
+   2:../src/system.c **** #include <s3cev40.h>
+   3:../src/system.c **** #include <system.h>
+   4:../src/system.c **** 
+   5:../src/system.c **** 
+   6:../src/system.c **** static void port_init() {
+ 1961              		.loc 1 6 0
+ 1962              		.cfi_startproc
+ 1963              		@ Function supports interworking.
+ 1964              		@ args = 0, pretend = 0, frame = 0
+ 1965              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1966 0000 0DC0A0E1 		mov	ip, sp
+ 1967              	.LCFI0:
+ 1968              		.cfi_def_cfa_register 12
+ 1969 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1970 0008 04B04CE2 		sub	fp, ip, #4
+ 1971              		.cfi_offset 14, -8
+ 1972              		.cfi_offset 13, -12
+ 1973              		.cfi_offset 11, -16
+ 1974              	.LCFI1:
+ 1975              		.cfi_def_cfa 11, 4
+   7:../src/system.c **** 
+   8:../src/system.c **** 	/* Esta en la pagina 56 del Tema 2 */
+   9:../src/system.c **** 
+  10:../src/system.c **** 	PDATA = ~0;
+ 1976              		.loc 1 10 0
+ 1977 000c 00319FE5 		ldr	r3, .L2
+ 1978 0010 0020E0E3 		mvn	r2, #0
+ 1979 0014 002083E5 		str	r2, [r3, #0]
+  11:../src/system.c **** 	PCONA = 0xFE; //(00.1111.1110)
+ 1980              		.loc 1 11 0
+ 1981 0018 F8309FE5 		ldr	r3, .L2+4
+ 1982 001c FE20A0E3 		mov	r2, #254
+ 1983 0020 002083E5 		str	r2, [r3, #0]
+  12:../src/system.c **** 	PDATB = ~0;
+ 1984              		.loc 1 12 0
+ 1985 0024 F0309FE5 		ldr	r3, .L2+8
+ 1986 0028 0020E0E3 		mvn	r2, #0
+ 1987 002c 002083E5 		str	r2, [r3, #0]
+  13:../src/system.c **** 	PCONB = 0x14F; // (001.0100.1111)
+ 1988              		.loc 1 13 0
+ 1989 0030 E8309FE5 		ldr	r3, .L2+12
+ 1990 0034 E8209FE5 		ldr	r2, .L2+16
+ 1991 0038 002083E5 		str	r2, [r3, #0]
+  14:../src/system.c **** 	PDATC = ~0;
+ 1992              		.loc 1 14 0
+ 1993 003c E4309FE5 		ldr	r3, .L2+20
+ 1994 0040 0020E0E3 		mvn	r2, #0
+ 1995 0044 002083E5 		str	r2, [r3, #0]
+  15:../src/system.c **** 	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111) 
+ 1996              		.loc 1 15 0
+ 1997 0048 DC309FE5 		ldr	r3, .L2+24
+ 1998 004c DC209FE5 		ldr	r2, .L2+28
+ 1999 0050 002083E5 		str	r2, [r3, #0]
+  16:../src/system.c **** 	PUPC = 0x94FB; // (1001.0100.1111.1011) 
+ 2000              		.loc 1 16 0
+ 2001 0054 D8309FE5 		ldr	r3, .L2+32
+ 2002 0058 D8209FE5 		ldr	r2, .L2+36
+ 2003 005c 002083E5 		str	r2, [r3, #0]
+  17:../src/system.c **** 	PDATD = ~0;
+ 2004              		.loc 1 17 0
+ 2005 0060 D4309FE5 		ldr	r3, .L2+40
+ 2006 0064 0020E0E3 		mvn	r2, #0
+ 2007 0068 002083E5 		str	r2, [r3, #0]
+  18:../src/system.c **** 	PCOND = 0xAAAA; // (1010.1010.1010.1010)
+ 2008              		.loc 1 18 0
+ 2009 006c CC309FE5 		ldr	r3, .L2+44
+ 2010 0070 CC209FE5 		ldr	r2, .L2+48
+ 2011 0074 002083E5 		str	r2, [r3, #0]
+  19:../src/system.c **** 	PUPD = 0xFF; // (1111.1111)
+ 2012              		.loc 1 19 0
+ 2013 0078 C8309FE5 		ldr	r3, .L2+52
+ 2014 007c FF20A0E3 		mov	r2, #255
+ 2015 0080 002083E5 		str	r2, [r3, #0]
+  20:../src/system.c **** 	PDATE = ~0;
+ 2016              		.loc 1 20 0
+ 2017 0084 C0309FE5 		ldr	r3, .L2+56
+ 2018 0088 0020E0E3 		mvn	r2, #0
+ 2019 008c 002083E5 		str	r2, [r3, #0]
+  21:../src/system.c **** 	PCONE = 0x25569; // (10.0101.0101.0110.1001)
+ 2020              		.loc 1 21 0
+ 2021 0090 B8309FE5 		ldr	r3, .L2+60
+ 2022 0094 B8209FE5 		ldr	r2, .L2+64
+ 2023 0098 002083E5 		str	r2, [r3, #0]
+  22:../src/system.c **** 	PUPE = 0x1FB; // (1.1111.1011) 
+ 2024              		.loc 1 22 0
+ 2025 009c B4309FE5 		ldr	r3, .L2+68
+ 2026 00a0 B4209FE5 		ldr	r2, .L2+72
+ 2027 00a4 002083E5 		str	r2, [r3, #0]
+  23:../src/system.c **** 	PDATF = ~0;
+ 2028              		.loc 1 23 0
+ 2029 00a8 B0309FE5 		ldr	r3, .L2+76
+ 2030 00ac 0020E0E3 		mvn	r2, #0
+ 2031 00b0 002083E5 		str	r2, [r3, #0]
+  24:../src/system.c **** 	PCONF = 0x251A; // (00.0000.0010.0101.0001.1010)
+ 2032              		.loc 1 24 0
+ 2033 00b4 A8309FE5 		ldr	r3, .L2+80
+ 2034 00b8 A8209FE5 		ldr	r2, .L2+84
+ 2035 00bc 002083E5 		str	r2, [r3, #0]
+  25:../src/system.c **** 	PUPF = 0x74; // (0.0111.0100)  
+ 2036              		.loc 1 25 0
+ 2037 00c0 A4309FE5 		ldr	r3, .L2+88
+ 2038 00c4 7420A0E3 		mov	r2, #116
+ 2039 00c8 002083E5 		str	r2, [r3, #0]
+  26:../src/system.c **** 	PDATG = ~0;
+ 2040              		.loc 1 26 0
+ 2041 00cc 9C309FE5 		ldr	r3, .L2+92
+ 2042 00d0 0020E0E3 		mvn	r2, #0
+ 2043 00d4 002083E5 		str	r2, [r3, #0]
+  27:../src/system.c **** 	PCONG = 0xF5FF; // (1111.0101.1111.1111)
+ 2044              		.loc 1 27 0
+ 2045 00d8 94309FE5 		ldr	r3, .L2+96
+ 2046 00dc 94209FE5 		ldr	r2, .L2+100
+ 2047 00e0 002083E5 		str	r2, [r3, #0]
+  28:../src/system.c **** 	PUPG = 0x30; // (0011.0000)
+ 2048              		.loc 1 28 0
+ 2049 00e4 90309FE5 		ldr	r3, .L2+104
+ 2050 00e8 3020A0E3 		mov	r2, #48
+ 2051 00ec 002083E5 		str	r2, [r3, #0]
+  29:../src/system.c **** 	SPUCR = 0x7; // (111)
+ 2052              		.loc 1 29 0
+ 2053 00f0 88309FE5 		ldr	r3, .L2+108
+ 2054 00f4 0720A0E3 		mov	r2, #7
+ 2055 00f8 002083E5 		str	r2, [r3, #0]
+  30:../src/system.c **** 	EXTINT = 0x22000220; // (X010.X010.X000.X000.X000.X010.X010.X000)
+ 2056              		.loc 1 30 0
+ 2057 00fc 80309FE5 		ldr	r3, .L2+112
+ 2058 0100 80209FE5 		ldr	r2, .L2+116
+ 2059 0104 002083E5 		str	r2, [r3, #0]
+  31:../src/system.c **** }
+ 2060              		.loc 1 31 0
+ 2061 0108 0CD04BE2 		sub	sp, fp, #12
+ 2062 010c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2063 0110 1EFF2FE1 		bx	lr
+ 2064              	.L3:
+ 2065              		.align	2
+ 2066              	.L2:
+ 2067 0114 0400D201 		.word	30539780
+ 2068 0118 0000D201 		.word	30539776
+ 2069 011c 0C00D201 		.word	30539788
+ 2070 0120 0800D201 		.word	30539784
+ 2071 0124 4F010000 		.word	335
+ 2072 0128 1400D201 		.word	30539796
+ 2073 012c 1000D201 		.word	30539792
+ 2074 0130 FF55F55F 		.word	1609913855
+ 2075 0134 1800D201 		.word	30539800
+ 2076 0138 FB940000 		.word	38139
+ 2077 013c 2000D201 		.word	30539808
+ 2078 0140 1C00D201 		.word	30539804
+ 2079 0144 AAAA0000 		.word	43690
+ 2080 0148 2400D201 		.word	30539812
+ 2081 014c 2C00D201 		.word	30539820
+ 2082 0150 2800D201 		.word	30539816
+ 2083 0154 69550200 		.word	152937
+ 2084 0158 3000D201 		.word	30539824
+ 2085 015c FB010000 		.word	507
+ 2086 0160 3800D201 		.word	30539832
+ 2087 0164 3400D201 		.word	30539828
+ 2088 0168 1A250000 		.word	9498
+ 2089 016c 3C00D201 		.word	30539836
+ 2090 0170 4400D201 		.word	30539844
+ 2091 0174 4000D201 		.word	30539840
+ 2092 0178 FFF50000 		.word	62975
+ 2093 017c 4800D201 		.word	30539848
+ 2094 0180 4C00D201 		.word	30539852
+ 2095 0184 5000D201 		.word	30539856
+ 2096 0188 20020022 		.word	570425888
+ 2097              		.cfi_endproc
+ 2098              	.LFE0:
+ 2100              		.align	2
+ 2101              		.global	sys_init
+ 2103              	sys_init:
+ 2104              	.LFB1:
+  32:../src/system.c **** 
+  33:../src/system.c **** 
+  34:../src/system.c **** /*
+  35:../src/system.c **** **  Inicializa el sistema
+  36:../src/system.c **** **    Deshabilita el watchdog
+  37:../src/system.c **** **    Enmascara todas las interrupciones
+  38:../src/system.c **** **    Configura el gestor de reloj
+  39:../src/system.c **** **      Tiempo de estabilización del PLL máximo
+  40:../src/system.c **** **      MCLK = 64 MHz
+  41:../src/system.c **** **      MCLK_SLOW = 500 KHz
+  42:../src/system.c **** **      Modo de funcionamiento normal
+  43:../src/system.c **** **      Reloj distribuido a todos los controladores
+  44:../src/system.c **** **    Arbitro de bus con prioridades por defecto
+  45:../src/system.c **** **    Cache deshabilitada
+  46:../src/system.c **** **    Configura los puertos de E/S
+  47:../src/system.c **** **    Configura el controlador de interrupciones
+  48:../src/system.c **** **      Fija prioridades por defecto
+  49:../src/system.c **** **      Todas las fuentes de interrupción en modo IRQ
+  50:../src/system.c **** **      Instala dummy ISR
+  51:../src/system.c **** **      Borra interrupciones pendientes externas e internas
+  52:../src/system.c **** **      IRQ vectorizadas, linea IRQ activada, linea FIQ desactivada
+  53:../src/system.c **** **  Inicializa el UART0
+  54:../src/system.c **** **  Muestra información del sistema por la UART0
+  55:../src/system.c **** */
+  56:../src/system.c **** void sys_init( void ){
+ 2105              		.loc 1 56 0
+ 2106              		.cfi_startproc
+ 2107              		@ Function supports interworking.
+ 2108              		@ args = 0, pretend = 0, frame = 0
+ 2109              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2110 018c 0DC0A0E1 		mov	ip, sp
+ 2111              	.LCFI2:
+ 2112              		.cfi_def_cfa_register 12
+ 2113 0190 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2114 0194 04B04CE2 		sub	fp, ip, #4
+ 2115              		.cfi_offset 14, -8
+ 2116              		.cfi_offset 13, -12
+ 2117              		.cfi_offset 11, -16
+ 2118              	.LCFI3:
+ 2119              		.cfi_def_cfa 11, 4
+  57:../src/system.c **** 	port_init();
+ 2120              		.loc 1 57 0
+ 2121 0198 98FFFFEB 		bl	port_init
+  58:../src/system.c **** }
+ 2122              		.loc 1 58 0
+ 2123 019c 0CD04BE2 		sub	sp, fp, #12
+ 2124 01a0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2125 01a4 1EFF2FE1 		bx	lr
+ 2126              		.cfi_endproc
+ 2127              	.LFE1:
+ 2129              		.align	2
+ 2130              		.global	sleep
+ 2132              	sleep:
+ 2133              	.LFB2:
+  59:../src/system.c **** 
+  60:../src/system.c **** /*
+  61:../src/system.c **** **  Pone el procesador en estado IDLE
+  62:../src/system.c **** */
+  63:../src/system.c **** inline void sleep( void ){
+ 2134              		.loc 1 63 0
+ 2135              		.cfi_startproc
+ 2136              		@ Function supports interworking.
+ 2137              		@ args = 0, pretend = 0, frame = 0
+ 2138              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2139 01a8 0DC0A0E1 		mov	ip, sp
+ 2140              	.LCFI4:
+ 2141              		.cfi_def_cfa_register 12
+ 2142 01ac 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2143 01b0 04B04CE2 		sub	fp, ip, #4
+ 2144              		.cfi_offset 14, -8
+ 2145              		.cfi_offset 13, -12
+ 2146              		.cfi_offset 11, -16
+ 2147              	.LCFI5:
+ 2148              		.cfi_def_cfa 11, 4
+  64:../src/system.c **** 
+  65:../src/system.c **** }
+ 2149              		.loc 1 65 0
+ 2150 01b4 0CD04BE2 		sub	sp, fp, #12
+ 2151 01b8 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2152 01bc 1EFF2FE1 		bx	lr
+ 2153              		.cfi_endproc
+ 2154              	.LFE2:
+ 2156              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 system.c
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:1957   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:1959   .text:00000000 port_init
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:2067   .text:00000114 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:2100   .text:0000018c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:2103   .text:0000018c sys_init
+C:\Users\USUARI~1\AppData\Local\Temp\cc1rEkrN.s:2132   .text:000001a8 sleep
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

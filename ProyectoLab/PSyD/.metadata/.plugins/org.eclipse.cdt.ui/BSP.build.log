@@ -1,6 +1,16 @@
-10:18:31 **** Clean-only build of configuration Debug for project BSP ****
-cs-make clean 
-cs-make: *** No rule to make target `clean'.  Stop.
+15:18:19 **** Incremental Build of configuration Debug for project BSP ****
+cs-make all 
+'Building file: ../src/leds.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/leds.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/leds.d" -MT"src/leds.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/leds.o" "../src/leds.c"
+'Finished building: ../src/leds.c'
+' '
+'Building target: libBSP.a'
+'Invoking: ARM Sourcery Windows GCC Archiver'
+arm-none-eabi-ar -r  "libBSP.a"  ./src/leds.o ./src/segs.o ./src/system.o   
+arm-none-eabi-ar: creating libBSP.a
+'Finished building target: libBSP.a'
+' '
 
-10:18:31 Build Finished (took 78ms)
+15:18:20 Build Finished (took 593ms)
 

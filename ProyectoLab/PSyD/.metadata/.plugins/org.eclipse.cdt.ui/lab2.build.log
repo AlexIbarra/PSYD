@@ -1,7 +1,30 @@
-10:18:31 **** Clean-only build of configuration Debug for project lab2 ****
-cs-make clean 
-cs-rm -rf  lab2.siz  ./lab2.o  ./lab2.d  lab2.hex  lab2.lst  lab2.elf
+09:54:05 **** Build of configuration Debug for project lab2 ****
+cs-make all 
+'Building file: ../lab2.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab2.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab2.d" -MT"lab2.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab2.o" "../lab2.c"
+../lab2.c:26:6: warning: return type of 'main' is not 'int'
+'Finished building: ../lab2.c'
+' '
+'Building target: lab2.elf'
+'Invoking: ARM Sourcery Windows GCC C Linker'
+arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab2\lab2.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab2.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab2.elf"  ./lab2.o   -lBSP
+'Finished building target: lab2.elf'
+' '
+'Invoking: ARM Sourcery Windows GNU Create Flash Image'
+arm-none-eabi-objcopy -O binary lab2.elf  "lab2.hex"
+'Finished building: lab2.hex'
+' '
+'Invoking: ARM Sourcery Windows GNU Create Listing'
+arm-none-eabi-objdump -h -S lab2.elf > "lab2.lst"
+'Finished building: lab2.lst'
+' '
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab2.elf
+   text	   data	    bss	    dec	    hex	filename
+    116	      0	      0	    116	     74	lab2.elf
+'Finished building: lab2.siz'
 ' '
 
-10:18:31 Build Finished (took 140ms)
+09:54:06 Build Finished (took 524ms)
 

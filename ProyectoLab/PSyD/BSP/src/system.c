@@ -54,6 +54,20 @@ static void port_init() {
 **  Muestra información del sistema por la UART0
 */
 void sys_init( void ){
+
+	/* Mirar pagina 7 y 8 del tema 2 */
+	WTCON = 0;
+	INTMSK = ~0;
+	LOCKTIME = 0xFFF; //Estabilización del PLL: 512 us --> (1 / 8MHz)×4095
+	PLLCON = 0x38021; //Frecuencia del MCLK_SLOW: 500 KHz
+	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz 
+	CLCKCON = 0x7FF8; //Modo de funcionamiento normal y Reloj distribuido a todos lo controladores
+	 
+	
+
+	/* Mirar pagina 63 del tema 2 */	
+	SBUSCON = 0x8000001B; //Prioridades de bus del sistema fijas: LCD > ZDMA > BDMA > IRQ (por defecto)
+	SYSCFG = 0x0; //Cache deshabilitada
 	port_init();
 }
 

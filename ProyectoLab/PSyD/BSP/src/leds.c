@@ -4,6 +4,7 @@
 
 static uint8 state_left;
 static uint8 state_right;
+static uint8 state;
 
 /*
 ** Inicializa los leds y los apaga
@@ -13,6 +14,7 @@ void leds_init( void ){
 	PDATB |= (RIGHT_LED<<9) | (LEFT_LED<<9);
 	state_left = OFF;
 	state_right = OFF;
+	state &= 0;
 }
 
 /*
@@ -20,10 +22,11 @@ void leds_init( void ){
 */
 void led_on( uint8 led ){
 	PDATB &= ~(led<<9);
-	if(led == LEFT_LED)
+	state |= led;
+	/*if(led == LEFT_LED)
 		state_left = ON;
 	else
-		state_right = ON;
+		state_right = ON;*/
 }
 
 /*
@@ -31,10 +34,11 @@ void led_on( uint8 led ){
 */
 void led_off( uint8 led ){
 	PDATB |= led<<9;
-	if(led == LEFT_LED)
+	state &= led;
+	/*if(led == LEFT_LED)
 		state_left = OFF;
 	else
-		state_right = OFF;
+		state_right = OFF;*/
 }
 
 /*
@@ -42,7 +46,8 @@ void led_off( uint8 led ){
 */
 void led_toggle( uint8 led ){
 	PDATB ^= (led<<9);
-	if(led == LEFT_LED){
+	state ^= led;
+	/*if(led == LEFT_LED){
 		if(state_left == ON)
 			state_left = OFF;
 		else
@@ -53,7 +58,7 @@ void led_toggle( uint8 led ){
 			state_right = OFF;
 		else
 			state_right = ON;
-	}
+	}*/
 }
 
 /*
@@ -75,8 +80,10 @@ uint8 led_status( uint8 led ){
 //		else
 //			return OFF;
 //	}
-	if(led == LEFT_LED)
+
+	return ((state & led) >> led-1);
+	/*if(led == LEFT_LED)
 		return state_left;
 	else
-		return state_right;
+		return state_right;*/
 }

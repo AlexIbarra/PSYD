@@ -34,7 +34,7 @@ void led_on( uint8 led ){
 */
 void led_off( uint8 led ){
 	PDATB |= led<<9;
-	state &= led;
+	state &= ~led;
 	/*if(led == LEFT_LED)
 		state_left = OFF;
 	else
@@ -81,7 +81,7 @@ uint8 led_status( uint8 led ){
 //			return OFF;
 //	}
 
-	return ((state & led) >> led-1);
+	return (state & led) >> led-1;
 	/*if(led == LEFT_LED)
 		return state_left;
 	else

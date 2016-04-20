@@ -1,16 +1,46 @@
-15:18:19 **** Incremental Build of configuration Debug for project BSP ****
+10:13:57 **** Incremental Build of configuration Debug for project BSP ****
 cs-make all 
 'Building file: ../src/leds.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
 arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/leds.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/leds.d" -MT"src/leds.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/leds.o" "../src/leds.c"
+../src/leds.c: In function 'led_status':
+../src/leds.c:44:2: warning: suggest parentheses around '-' inside '>>'
 'Finished building: ../src/leds.c'
+' '
+'Building file: ../src/rtc.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/rtc.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/rtc.d" -MT"src/rtc.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/rtc.o" "../src/rtc.c"
+'Finished building: ../src/rtc.c'
+' '
+'Building file: ../src/segs.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/segs.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/segs.d" -MT"src/segs.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/segs.o" "../src/segs.c"
+'Finished building: ../src/segs.c'
+' '
+'Building file: ../src/system.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/system.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/system.d" -MT"src/system.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/system.o" "../src/system.c"
+../src/system.c: In function 'sys_init':
+../src/system.c:127:2: warning: implicit declaration of function 'uart0_init'
+../src/system.c: In function 'isr_RESET_dummy':
+../src/system.c:172:2: warning: implicit declaration of function 'uart0_puts'
+../src/system.c: At top level:
+../src/system.c:376:13: warning: 'show_sys_info' defined but not used
+'Finished building: ../src/system.c'
+' '
+'Building file: ../src/uart.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/uart.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/uart.d" -MT"src/uart.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/uart.o" "../src/uart.c"
+../src/uart.c: In function 'uart0_putint':
+../src/uart.c:55:15: warning: unused variable 'dig'
+'Finished building: ../src/uart.c'
 ' '
 'Building target: libBSP.a'
 'Invoking: ARM Sourcery Windows GCC Archiver'
-arm-none-eabi-ar -r  "libBSP.a"  ./src/leds.o ./src/segs.o ./src/system.o   
+arm-none-eabi-ar -r  "libBSP.a"  ./src/leds.o ./src/rtc.o ./src/segs.o ./src/system.o ./src/uart.o   
 arm-none-eabi-ar: creating libBSP.a
 'Finished building target: libBSP.a'
 ' '
 
-15:18:20 Build Finished (took 593ms)
+10:13:57 Build Finished (took 823ms)
 

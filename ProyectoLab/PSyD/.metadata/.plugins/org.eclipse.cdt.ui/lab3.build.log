@@ -1,4 +1,4 @@
-15:19:40 **** Incremental Build of configuration Debug for project lab3 ****
+09:37:09 **** Incremental Build of configuration Debug for project lab3 ****
 cs-make all 
 'Invoking: ARM Sourcery Windows GNU Print Size'
 arm-none-eabi-size  --format=berkeley lab3.elf
@@ -7,5 +7,5 @@ arm-none-eabi-size  --format=berkeley lab3.elf
 'Finished building: lab3.siz'
 ' '
 
-15:19:40 Build Finished (took 156ms)
+09:37:09 Build Finished (took 156ms)
 

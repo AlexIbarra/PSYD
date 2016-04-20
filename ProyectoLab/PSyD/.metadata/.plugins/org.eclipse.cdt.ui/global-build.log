@@ -1,56 +1,99 @@
-15:18:19 **** Incremental Build of configuration Debug for project BSP ****
+10:14:01 **** Incremental Build of configuration Debug for project lab5 ****
 cs-make all 
-'Building file: ../src/leds.c'
+'Building file: ../lab5.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
-arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/leds.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/leds.d" -MT"src/leds.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/leds.o" "../src/leds.c"
-'Finished building: ../src/leds.c'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab5.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab5.d" -MT"lab5.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab5.o" "../lab5.c"
+../lab5.c:25:6: warning: return type of 'main' is not 'int'
+'Finished building: ../lab5.c'
 ' '
-'Building target: libBSP.a'
-'Invoking: ARM Sourcery Windows GCC Archiver'
-arm-none-eabi-ar -r  "libBSP.a"  ./src/leds.o ./src/segs.o ./src/system.o   
-arm-none-eabi-ar: creating libBSP.a
-'Finished building target: libBSP.a'
-' '
-15:18:36 **** Incremental Build of configuration Debug for project lab3 ****
-cs-make all 
-'Building file: ../lab3.c'
-'Invoking: ARM Sourcery Windows GCC C Compiler'
-arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab3.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab3.d" -MT"lab3.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab3.o" "../lab3.c"
-../lab3.c:24:6: warning: return type of 'main' is not 'int'
-'Finished building: ../lab3.c'
-' '
-'Building target: lab3.elf'
+'Building target: lab5.elf'
 'Invoking: ARM Sourcery Windows GCC C Linker'
-arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab3\lab.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab3.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab3.elf"  ./lab3.o   -lBSP
-'Finished building target: lab3.elf'
+arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab4\lab.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab5.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab5.elf"  ./lab5.o   -lBSP
+'Finished building target: lab5.elf'
 ' '
 'Invoking: ARM Sourcery Windows GNU Create Flash Image'
-arm-none-eabi-objcopy -O binary lab3.elf  "lab3.hex"
-'Finished building: lab3.hex'
+arm-none-eabi-objcopy -O binary lab5.elf  "lab5.hex"
+'Finished building: lab5.hex'
 ' '
 'Invoking: ARM Sourcery Windows GNU Create Listing'
-arm-none-eabi-objdump -h -S lab3.elf > "lab3.lst"
-'Finished building: lab3.lst'
+arm-none-eabi-objdump -h -S lab5.elf > "lab5.lst"
+'Finished building: lab5.lst'
 ' '
 'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab3.elf
+arm-none-eabi-size  --format=berkeley lab5.elf
    text	   data	    bss	    dec	    hex	filename
-   1572	      0	      3	   1575	    627	lab3.elf
-'Finished building: lab3.siz'
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
 ' '
-15:19:13 **** Incremental Build of configuration Debug for project lab3 ****
+10:15:07 **** Incremental Build of configuration Debug for project lab5 ****
 cs-make all 
 'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab3.elf
+arm-none-eabi-size  --format=berkeley lab5.elf
    text	   data	    bss	    dec	    hex	filename
-   1572	      0	      3	   1575	    627	lab3.elf
-'Finished building: lab3.siz'
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
 ' '
-15:19:40 **** Incremental Build of configuration Debug for project lab3 ****
+10:20:59 **** Incremental Build of configuration Debug for project lab5 ****
 cs-make all 
 'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab3.elf
+arm-none-eabi-size  --format=berkeley lab5.elf
    text	   data	    bss	    dec	    hex	filename
-   1572	      0	      3	   1575	    627	lab3.elf
-'Finished building: lab3.siz'
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:33:09 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:36:23 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:39:56 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:42:31 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:43:21 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:46:16 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
+' '
+10:47:17 **** Incremental Build of configuration Debug for project lab5 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab5.elf
+   text	   data	    bss	    dec	    hex	filename
+   9424	      0	      0	   9424	   24d0	lab5.elf
+'Finished building: lab5.siz'
 ' '

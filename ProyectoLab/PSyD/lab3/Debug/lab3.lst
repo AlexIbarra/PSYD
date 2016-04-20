@@ -177,36 +177,36 @@ void delay( void )
  c100124:	001e847f 	.word	0x001e847f
 
 0c100128 <leds_init>:
-static uint8 state_right;
 
 /*
 ** Inicializa los leds y los apaga
 */
 void leds_init( void ){
+	PCONB &= ~(1<<10) & ~(1<<9);	// PB[10] = out, PF[9] = out
  c100128:	e1a0c00d 	mov	ip, sp
  c10012c:	e92dd800 	push	{fp, ip, lr, pc}
  c100130:	e24cb004 	sub	fp, ip, #4
-	PCONB &= ~(1<<10) & ~(1<<9);	// PB[10] = out, PF[9] = out
+	PDATB |= (RIGHT_LED<<9) | (LEFT_LED<<9);
  c100134:	e59f3044 	ldr	r3, [pc, #68]	; c100180 <leds_init+0x58>
  c100138:	e59f2040 	ldr	r2, [pc, #64]	; c100180 <leds_init+0x58>
  c10013c:	e5922000 	ldr	r2, [r2]
  c100140:	e3c22c06 	bic	r2, r2, #1536	; 0x600
  c100144:	e5832000 	str	r2, [r3]
-	PDATB |= (RIGHT_LED<<9) | (LEFT_LED<<9);
+	state &= 0;
  c100148:	e59f3034 	ldr	r3, [pc, #52]	; c100184 <leds_init+0x5c>
  c10014c:	e59f2030 	ldr	r2, [pc, #48]	; c100184 <leds_init+0x5c>
  c100150:	e5922000 	ldr	r2, [r2]
  c100154:	e3822c06 	orr	r2, r2, #1536	; 0x600
  c100158:	e5832000 	str	r2, [r3]
-	state_left = OFF;
+}
  c10015c:	e59f3024 	ldr	r3, [pc, #36]	; c100188 <leds_init+0x60>
  c100160:	e3a02000 	mov	r2, #0
  c100164:	e5c32000 	strb	r2, [r3]
-	state_right = OFF;
+
  c100168:	e59f301c 	ldr	r3, [pc, #28]	; c10018c <leds_init+0x64>
  c10016c:	e3a02000 	mov	r2, #0
  c100170:	e5c32000 	strb	r2, [r3]
-}
+/*
  c100174:	e24bd00c 	sub	sp, fp, #12
  c100178:	e89d6800 	ldm	sp, {fp, sp, lr}
  c10017c:	e12fff1e 	bx	lr
@@ -216,18 +216,18 @@ void leds_init( void ){
  c10018c:	0c100625 	.word	0x0c100625
 
 0c100190 <led_on>:
-
-/*
 ** Enciende el led indicado
 */
 void led_on( uint8 led ){
+	PDATB &= ~(led<<9);
+	state |= led;
  c100190:	e1a0c00d 	mov	ip, sp
  c100194:	e92dd800 	push	{fp, ip, lr, pc}
  c100198:	e24cb004 	sub	fp, ip, #4
  c10019c:	e24dd008 	sub	sp, sp, #8
  c1001a0:	e1a03000 	mov	r3, r0
  c1001a4:	e54b300d 	strb	r3, [fp, #-13]
-	PDATB &= ~(led<<9);
+}
  c1001a8:	e59f304c 	ldr	r3, [pc, #76]	; c1001fc <led_on+0x6c>
  c1001ac:	e59f2048 	ldr	r2, [pc, #72]	; c1001fc <led_on+0x6c>
  c1001b0:	e5921000 	ldr	r1, [r2]
@@ -236,21 +236,21 @@ void led_on( uint8 led ){
  c1001bc:	e1e02002 	mvn	r2, r2
  c1001c0:	e0012002 	and	r2, r1, r2
  c1001c4:	e5832000 	str	r2, [r3]
-	if(led == LEFT_LED)
+
  c1001c8:	e55b300d 	ldrb	r3, [fp, #-13]
  c1001cc:	e3530001 	cmp	r3, #1
  c1001d0:	1a000003 	bne	c1001e4 <led_on+0x54>
-		state_left = ON;
+/*
  c1001d4:	e59f3024 	ldr	r3, [pc, #36]	; c100200 <led_on+0x70>
  c1001d8:	e3a02001 	mov	r2, #1
  c1001dc:	e5c32000 	strb	r2, [r3]
  c1001e0:	ea000002 	b	c1001f0 <led_on+0x60>
-	else
-		state_right = ON;
+** Apaga el led indicado
+*/
  c1001e4:	e59f3018 	ldr	r3, [pc, #24]	; c100204 <led_on+0x74>
  c1001e8:	e3a02001 	mov	r2, #1
  c1001ec:	e5c32000 	strb	r2, [r3]
-}
+void led_off( uint8 led ){
  c1001f0:	e24bd00c 	sub	sp, fp, #12
  c1001f4:	e89d6800 	ldm	sp, {fp, sp, lr}
  c1001f8:	e12fff1e 	bx	lr
@@ -259,18 +259,18 @@ void led_on( uint8 led ){
  c100204:	0c100625 	.word	0x0c100625
 
 0c100208 <led_off>:
+	PDATB |= led<<9;
+	state &= ~led;
+}
 
 /*
-** Apaga el led indicado
-*/
-void led_off( uint8 led ){
  c100208:	e1a0c00d 	mov	ip, sp
  c10020c:	e92dd800 	push	{fp, ip, lr, pc}
  c100210:	e24cb004 	sub	fp, ip, #4
  c100214:	e24dd008 	sub	sp, sp, #8
  c100218:	e1a03000 	mov	r3, r0
  c10021c:	e54b300d 	strb	r3, [fp, #-13]
-	PDATB |= led<<9;
+** Conmuta el led indicado
  c100220:	e59f3048 	ldr	r3, [pc, #72]	; c100270 <led_off+0x68>
  c100224:	e59f2044 	ldr	r2, [pc, #68]	; c100270 <led_off+0x68>
  c100228:	e5921000 	ldr	r1, [r2]
@@ -278,17 +278,17 @@ void led_off( uint8 led ){
  c100230:	e1a02482 	lsl	r2, r2, #9
  c100234:	e1812002 	orr	r2, r1, r2
  c100238:	e5832000 	str	r2, [r3]
-	if(led == LEFT_LED)
+*/
  c10023c:	e55b300d 	ldrb	r3, [fp, #-13]
  c100240:	e3530001 	cmp	r3, #1
  c100244:	1a000003 	bne	c100258 <led_off+0x50>
-		state_left = OFF;
+void led_toggle( uint8 led ){
  c100248:	e59f3024 	ldr	r3, [pc, #36]	; c100274 <led_off+0x6c>
  c10024c:	e3a02000 	mov	r2, #0
  c100250:	e5c32000 	strb	r2, [r3]
  c100254:	ea000002 	b	c100264 <led_off+0x5c>
-	else
-		state_right = OFF;
+	PDATB ^= (led<<9);
+	state ^= led;
  c100258:	e59f3018 	ldr	r3, [pc, #24]	; c100278 <led_off+0x70>
  c10025c:	e3a02000 	mov	r2, #0
  c100260:	e5c32000 	strb	r2, [r3]
@@ -303,16 +303,16 @@ void led_off( uint8 led ){
 0c10027c <led_toggle>:
 
 /*
-** Conmuta el led indicado
+** Devuelve el estado (ON/OFF) del led indicado
 */
-void led_toggle( uint8 led ){
+uint8 led_status( uint8 led ){
  c10027c:	e1a0c00d 	mov	ip, sp
  c100280:	e92dd800 	push	{fp, ip, lr, pc}
  c100284:	e24cb004 	sub	fp, ip, #4
  c100288:	e24dd008 	sub	sp, sp, #8
  c10028c:	e1a03000 	mov	r3, r0
  c100290:	e54b300d 	strb	r3, [fp, #-13]
-	PDATB ^= (led<<9);
+	return (state & led) >> led-1;
  c100294:	e59f3088 	ldr	r3, [pc, #136]	; c100324 <led_toggle+0xa8>
  c100298:	e59f2084 	ldr	r2, [pc, #132]	; c100324 <led_toggle+0xa8>
  c10029c:	e5921000 	ldr	r1, [r2]
@@ -320,45 +320,33 @@ void led_toggle( uint8 led ){
  c1002a4:	e1a02482 	lsl	r2, r2, #9
  c1002a8:	e0212002 	eor	r2, r1, r2
  c1002ac:	e5832000 	str	r2, [r3]
-	if(led == LEFT_LED){
+}
  c1002b0:	e55b300d 	ldrb	r3, [fp, #-13]
  c1002b4:	e3530001 	cmp	r3, #1
  c1002b8:	1a00000b 	bne	c1002ec <led_toggle+0x70>
-		if(state_left == ON)
  c1002bc:	e59f3064 	ldr	r3, [pc, #100]	; c100328 <led_toggle+0xac>
  c1002c0:	e5d33000 	ldrb	r3, [r3]
  c1002c4:	e3530001 	cmp	r3, #1
  c1002c8:	1a000003 	bne	c1002dc <led_toggle+0x60>
-			state_left = OFF;
  c1002cc:	e59f3054 	ldr	r3, [pc, #84]	; c100328 <led_toggle+0xac>
  c1002d0:	e3a02000 	mov	r2, #0
  c1002d4:	e5c32000 	strb	r2, [r3]
  c1002d8:	ea00000e 	b	c100318 <led_toggle+0x9c>
-		else
-			state_left = ON;
  c1002dc:	e59f3044 	ldr	r3, [pc, #68]	; c100328 <led_toggle+0xac>
  c1002e0:	e3a02001 	mov	r2, #1
  c1002e4:	e5c32000 	strb	r2, [r3]
  c1002e8:	ea00000a 	b	c100318 <led_toggle+0x9c>
-	}
-	else{
-		if(state_right == ON)
  c1002ec:	e59f3038 	ldr	r3, [pc, #56]	; c10032c <led_toggle+0xb0>
  c1002f0:	e5d33000 	ldrb	r3, [r3]
  c1002f4:	e3530001 	cmp	r3, #1
  c1002f8:	1a000003 	bne	c10030c <led_toggle+0x90>
-			state_right = OFF;
  c1002fc:	e59f3028 	ldr	r3, [pc, #40]	; c10032c <led_toggle+0xb0>
  c100300:	e3a02000 	mov	r2, #0
  c100304:	e5c32000 	strb	r2, [r3]
  c100308:	ea000002 	b	c100318 <led_toggle+0x9c>
-		else
-			state_right = ON;
  c10030c:	e59f3018 	ldr	r3, [pc, #24]	; c10032c <led_toggle+0xb0>
  c100310:	e3a02001 	mov	r2, #1
  c100314:	e5c32000 	strb	r2, [r3]
-	}
-}
  c100318:	e24bd00c 	sub	sp, fp, #12
  c10031c:	e89d6800 	ldm	sp, {fp, sp, lr}
  c100320:	e12fff1e 	bx	lr
@@ -367,35 +355,20 @@ void led_toggle( uint8 led ){
  c10032c:	0c100625 	.word	0x0c100625
 
 0c100330 <led_status>:
-
-/*
-** Devuelve el estado (ON/OFF) del led indicado
-*/
-uint8 led_status( uint8 led ){
  c100330:	e1a0c00d 	mov	ip, sp
  c100334:	e92dd800 	push	{fp, ip, lr, pc}
  c100338:	e24cb004 	sub	fp, ip, #4
  c10033c:	e24dd008 	sub	sp, sp, #8
  c100340:	e1a03000 	mov	r3, r0
  c100344:	e54b300d 	strb	r3, [fp, #-13]
-//		if(st == OFF)
-//			return ON;
-//		else
-//			return OFF;
-//	}
-	if(led == LEFT_LED)
  c100348:	e55b300d 	ldrb	r3, [fp, #-13]
  c10034c:	e3530001 	cmp	r3, #1
  c100350:	1a000002 	bne	c100360 <led_status+0x30>
-		return state_left;
  c100354:	e59f301c 	ldr	r3, [pc, #28]	; c100378 <led_status+0x48>
  c100358:	e5d33000 	ldrb	r3, [r3]
  c10035c:	ea000001 	b	c100368 <led_status+0x38>
-	else
-		return state_right;
  c100360:	e59f3014 	ldr	r3, [pc, #20]	; c10037c <led_status+0x4c>
  c100364:	e5d33000 	ldrb	r3, [r3]
-}
  c100368:	e1a00003 	mov	r0, r3
  c10036c:	e24bd00c 	sub	sp, fp, #12
  c100370:	e89d6800 	ldm	sp, {fp, sp, lr}
@@ -638,24 +611,24 @@ void sys_init( void ){
  c1005e0:	e1a0c00d 	mov	ip, sp
  c1005e4:	e92dd800 	push	{fp, ip, lr, pc}
  c1005e8:	e24cb004 	sub	fp, ip, #4
-	port_init();
+
  c1005ec:	ebffff98 	bl	c100454 <port_init>
-}
+	/* Mirar pagina 7 y 8 del tema 2 */
  c1005f0:	e24bd00c 	sub	sp, fp, #12
  c1005f4:	e89d6800 	ldm	sp, {fp, sp, lr}
  c1005f8:	e12fff1e 	bx	lr
 
 0c1005fc <sleep>:
-
-/*
-**  Pone el procesador en estado IDLE
-*/
-inline void sleep( void ){
+	WTCON = 0;
+	INTMSK = ~0;
+	LOCKTIME = 0xFFF; //Estabilización del PLL: 512 us --> (1 / 8MHz)×4095
+	PLLCON = 0x38021; //Frecuencia del MCLK_SLOW: 500 KHz
+	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz 
  c1005fc:	e1a0c00d 	mov	ip, sp
  c100600:	e92dd800 	push	{fp, ip, lr, pc}
  c100604:	e24cb004 	sub	fp, ip, #4
-
-}
+	CLCKCON = 0x7FF8; //Modo de funcionamiento normal y Reloj distribuido a todos lo controladores
+	 
  c100608:	e24bd00c 	sub	sp, fp, #12
  c10060c:	e89d6800 	ldm	sp, {fp, sp, lr}
  c100610:	e12fff1e 	bx	lr

@@ -52,19 +52,26 @@ void uart0_puts( char *s ){
 ** Envía una cadena de caracteres por la UART que representa en decimal al entero que toma como argumento
 */
 void uart0_putint( int32 i ){
-	int num=i/10, dig=i%10, tam=0, numero[11], chorra=0;
-	do{
-		numero[chorra]=dig;
-		num/=10;
-		dig=i%10;
-		tam++;
-	}while(num > 0);
+	int32 num=i, dig=0, tam=0, numero[11], j=0;
 
-	if(i<0)
+	if(num<0){
 		uart0_putchar('-');
+		num*=-1;
+	}
 
-	for(chorra=tam-1; chorra>=0; chorra--)
-		uart0_putchar(numero[chorra]+48);
+	numero[j]=num%10;
+	num/=10;
+	tam++;
+
+	while(num > 0){
+		j++;
+		numero[j]=num%10;
+		num/=10;
+		tam++;
+	}
+
+	for(j=tam-1; j>=0; j--)
+		uart0_putchar(numero[j]+48);
 }
 
 /*
@@ -91,7 +98,7 @@ void uart0_puthex( uint32 i ){
 */
 char uart0_getchar( void ){
 	while( (UFSTAT0 & 0xf) == 0 );
-	return UTXH0;
+	return URXH0;
 }
 
 /*
@@ -102,7 +109,7 @@ void uart0_gets( char *s ){
 	s[i] = uart0_getchar();
 	while(s[i] != '\n') {
 		i++;
-		s[i] = uart0_getchar;		
+		s[i] = uart0_getchar();
 	}
 	s[i] = '\0';
 }
@@ -112,15 +119,16 @@ void uart0_gets( char *s ){
 */
 int32 uart0_getint( void ){
 	int32 num=0, signo=1;
-	char c = uart0_getchar;
-	if(c == '-')
+	uint8 c = uart0_getchar();
+	if(c == '-'){
 		signo = -1;
+		c = uart0_getchar();
+	}
+
 	while(c != '\n') {
-		if(c != '-') {
-			num *= 10;
-			num += c - 48;
-		}
-		c = uart0_getchar;
+		num *= 10;
+		num += c - 48;
+		c = uart0_getchar();
 	}
 	return num*signo;
 
@@ -130,5 +138,22 @@ int32 uart0_getint( void ){
 ** Forma una cadena con los caracteres recibidos por la UART hasta la recepción de '\n' y los interpreta en hexadecimal
 */
 uint32 uart0_gethex( void ){
+	int32 num=0;
+	uint8 c;
 
+	c = uart0_getchar();
+	while(c != '\n') {
+
+		if(c >= '0' && c <= '9')
+			num += c - '0';
+		else if(c >= 'A' && c <= 'F')
+			num += c - 55;
+		else if(c >= 'a' && c <= 'f')
+				num += c - 87;
+		num *= 16;
+		c = uart0_getchar();
+		if(c == '\n')
+			num /= 16;
+	}
+	return num;
 }

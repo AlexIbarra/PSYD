@@ -1,0 +1,351 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"rtc.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/rtc.c"
+ 1882              		.align	2
+ 1883              		.global	rtc_init
+ 1885              	rtc_init:
+ 1886              	.LFB0:
+   1:../src/rtc.c  **** /*-------------------------------------------------------------------
+   2:../src/rtc.c  **** **
+   3:../src/rtc.c  **** **  Fichero:
+   4:../src/rtc.c  **** **    rtc.h  29/4/2015
+   5:../src/rtc.c  **** **
+   6:../src/rtc.c  **** **    (c) J.M. Mendias
+   7:../src/rtc.c  **** **    Programación de Sistemas y Dispositivos
+   8:../src/rtc.c  **** **    Facultad de Informática. Universidad Complutense de Madrid
+   9:../src/rtc.c  **** **
+  10:../src/rtc.c  **** **  Propósito:
+  11:../src/rtc.c  **** **    Contiene las implemetaciones de las funciones
+  12:../src/rtc.c  **** **    para la gestión básica del Real Time Clock del chip S3C44BOX
+  13:../src/rtc.c  **** **
+  14:../src/rtc.c  **** **  Notas de diseño:
+  15:../src/rtc.c  **** **
+  16:../src/rtc.c  **** **-----------------------------------------------------------------*/
+  17:../src/rtc.c  **** 
+  18:../src/rtc.c  **** #include <rtc.h>
+  19:../src/rtc.c  **** #include <s3c44b0x.h>
+  20:../src/rtc.c  **** #include <s3cev40.h>
+  21:../src/rtc.c  **** 
+  22:../src/rtc.c  **** /*
+  23:../src/rtc.c  **** ** Configura el RTC desactivando alarma, round reset y generación de ticks
+  24:../src/rtc.c  **** ** Inicializa el RTC a las 00:00:00 horas del martes 1 de enero de 2013
+  25:../src/rtc.c  **** ** Inicializa a 0 los registros de alarma 
+  26:../src/rtc.c  **** */
+  27:../src/rtc.c  **** void rtc_init( void ) {
+ 1887              		.loc 1 27 0
+ 1888              		.cfi_startproc
+ 1889              		@ Function supports interworking.
+ 1890              		@ args = 0, pretend = 0, frame = 0
+ 1891              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1892 0000 0DC0A0E1 		mov	ip, sp
+ 1893              	.LCFI0:
+ 1894              		.cfi_def_cfa_register 12
+ 1895 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1896 0008 04B04CE2 		sub	fp, ip, #4
+ 1897              		.cfi_offset 14, -8
+ 1898              		.cfi_offset 13, -12
+ 1899              		.cfi_offset 11, -16
+ 1900              	.LCFI1:
+ 1901              		.cfi_def_cfa 11, 4
+  28:../src/rtc.c  **** 
+  29:../src/rtc.c  **** 	TICNT = 0x0;
+ 1902              		.loc 1 29 0
+ 1903 000c E4309FE5 		ldr	r3, .L2
+ 1904 0010 0020A0E3 		mov	r2, #0
+ 1905 0014 002083E5 		str	r2, [r3, #0]
+  30:../src/rtc.c  **** 	RTCALM = 0x0;
+ 1906              		.loc 1 30 0
+ 1907 0018 DC309FE5 		ldr	r3, .L2+4
+ 1908 001c 0020A0E3 		mov	r2, #0
+ 1909 0020 002083E5 		str	r2, [r3, #0]
+  31:../src/rtc.c  **** 	RTCRST = 0x0;
+ 1910              		.loc 1 31 0
+ 1911 0024 D4309FE5 		ldr	r3, .L2+8
+ 1912 0028 0020A0E3 		mov	r2, #0
+ 1913 002c 002083E5 		str	r2, [r3, #0]
+  32:../src/rtc.c  **** 	RTCCON = 0x1; // Debe habilitar la posibilidad de leer/escribir los registros de hora/fecha del RT
+ 1914              		.loc 1 32 0
+ 1915 0030 CC309FE5 		ldr	r3, .L2+12
+ 1916 0034 0120A0E3 		mov	r2, #1
+ 1917 0038 002083E5 		str	r2, [r3, #0]
+  33:../src/rtc.c  **** 	BCDYEAR = 0x2016; // 2016
+ 1918              		.loc 1 33 0
+ 1919 003c C4309FE5 		ldr	r3, .L2+16
+ 1920 0040 C4209FE5 		ldr	r2, .L2+20
+ 1921 0044 002083E5 		str	r2, [r3, #0]
+  34:../src/rtc.c  **** 	BCDMON = 0x1; // Enero
+ 1922              		.loc 1 34 0
+ 1923 0048 C0309FE5 		ldr	r3, .L2+24
+ 1924 004c 0120A0E3 		mov	r2, #1
+ 1925 0050 002083E5 		str	r2, [r3, #0]
+  35:../src/rtc.c  **** 	BCDDAY = 0x6; // El dia Jueves es fue 1 de enero (Domingo es el dia 1º de la semana)
+ 1926              		.loc 1 35 0
+ 1927 0054 B8309FE5 		ldr	r3, .L2+28
+ 1928 0058 0620A0E3 		mov	r2, #6
+ 1929 005c 002083E5 		str	r2, [r3, #0]
+  36:../src/rtc.c  **** 	BCDDATE = 0x1; // Dia 1
+ 1930              		.loc 1 36 0
+ 1931 0060 B0309FE5 		ldr	r3, .L2+32
+ 1932 0064 0120A0E3 		mov	r2, #1
+ 1933 0068 002083E5 		str	r2, [r3, #0]
+  37:../src/rtc.c  **** 	BCDHOUR = 0x0; // Hora 00
+ 1934              		.loc 1 37 0
+ 1935 006c A8309FE5 		ldr	r3, .L2+36
+ 1936 0070 0020A0E3 		mov	r2, #0
+ 1937 0074 002083E5 		str	r2, [r3, #0]
+  38:../src/rtc.c  **** 	BCDMIN = 0x0; // Minuto 00
+ 1938              		.loc 1 38 0
+ 1939 0078 A0309FE5 		ldr	r3, .L2+40
+ 1940 007c 0020A0E3 		mov	r2, #0
+ 1941 0080 002083E5 		str	r2, [r3, #0]
+  39:../src/rtc.c  **** 	BCDSEC = 0x0; // Segundo 00
+ 1942              		.loc 1 39 0
+ 1943 0084 98309FE5 		ldr	r3, .L2+44
+ 1944 0088 0020A0E3 		mov	r2, #0
+ 1945 008c 002083E5 		str	r2, [r3, #0]
+  40:../src/rtc.c  **** 	ALMYEAR = 0x0;
+ 1946              		.loc 1 40 0
+ 1947 0090 90309FE5 		ldr	r3, .L2+48
+ 1948 0094 0020A0E3 		mov	r2, #0
+ 1949 0098 002083E5 		str	r2, [r3, #0]
+  41:../src/rtc.c  **** 	ALMMON = 0x0;
+ 1950              		.loc 1 41 0
+ 1951 009c 88309FE5 		ldr	r3, .L2+52
+ 1952 00a0 0020A0E3 		mov	r2, #0
+ 1953 00a4 002083E5 		str	r2, [r3, #0]
+  42:../src/rtc.c  **** 	ALMDAY = 0x0;
+ 1954              		.loc 1 42 0
+ 1955 00a8 80309FE5 		ldr	r3, .L2+56
+ 1956 00ac 0020A0E3 		mov	r2, #0
+ 1957 00b0 002083E5 		str	r2, [r3, #0]
+  43:../src/rtc.c  **** 	ALMHOUR = 0x0;
+ 1958              		.loc 1 43 0
+ 1959 00b4 78309FE5 		ldr	r3, .L2+60
+ 1960 00b8 0020A0E3 		mov	r2, #0
+ 1961 00bc 002083E5 		str	r2, [r3, #0]
+  44:../src/rtc.c  **** 	ALMMIN = 0x0;
+ 1962              		.loc 1 44 0
+ 1963 00c0 70309FE5 		ldr	r3, .L2+64
+ 1964 00c4 0020A0E3 		mov	r2, #0
+ 1965 00c8 002083E5 		str	r2, [r3, #0]
+  45:../src/rtc.c  **** 	ALMSEC = 0x0;
+ 1966              		.loc 1 45 0
+ 1967 00cc 68309FE5 		ldr	r3, .L2+68
+ 1968 00d0 0020A0E3 		mov	r2, #0
+ 1969 00d4 002083E5 		str	r2, [r3, #0]
+  46:../src/rtc.c  **** 	RTCCON &= 0x0; // Deshabilita la posibilidad de leer/escribir los registros de hora/fecha del RTC
+ 1970              		.loc 1 46 0
+ 1971 00d8 24309FE5 		ldr	r3, .L2+12
+ 1972 00dc 003093E5 		ldr	r3, [r3, #0]
+ 1973 00e0 1C309FE5 		ldr	r3, .L2+12
+ 1974 00e4 0020A0E3 		mov	r2, #0
+ 1975 00e8 002083E5 		str	r2, [r3, #0]
+  47:../src/rtc.c  **** 
+  48:../src/rtc.c  **** }
+ 1976              		.loc 1 48 0
+ 1977 00ec 0CD04BE2 		sub	sp, fp, #12
+ 1978 00f0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1979 00f4 1EFF2FE1 		bx	lr
+ 1980              	.L3:
+ 1981              		.align	2
+ 1982              	.L2:
+ 1983 00f8 8C00D701 		.word	30867596
+ 1984 00fc 5000D701 		.word	30867536
+ 1985 0100 6C00D701 		.word	30867564
+ 1986 0104 4000D701 		.word	30867520
+ 1987 0108 8800D701 		.word	30867592
+ 1988 010c 16200000 		.word	8214
+ 1989 0110 8400D701 		.word	30867588
+ 1990 0114 7C00D701 		.word	30867580
+ 1991 0118 8000D701 		.word	30867584
+ 1992 011c 7800D701 		.word	30867576
+ 1993 0120 7400D701 		.word	30867572
+ 1994 0124 7000D701 		.word	30867568
+ 1995 0128 6800D701 		.word	30867560
+ 1996 012c 6400D701 		.word	30867556
+ 1997 0130 6000D701 		.word	30867552
+ 1998 0134 5C00D701 		.word	30867548
+ 1999 0138 5800D701 		.word	30867544
+ 2000 013c 5400D701 		.word	30867540
+ 2001              		.cfi_endproc
+ 2002              	.LFE0:
+ 2004              		.align	2
+ 2005              		.global	rtc_puttime
+ 2007              	rtc_puttime:
+ 2008              	.LFB1:
+  49:../src/rtc.c  **** 
+  50:../src/rtc.c  **** /*
+  51:../src/rtc.c  **** ** Actualiza la fecha y hora mantenida por el RTC 
+  52:../src/rtc.c  **** */
+  53:../src/rtc.c  **** void rtc_puttime( rtc_time_t *rtc_time ) {
+ 2009              		.loc 1 53 0
+ 2010              		.cfi_startproc
+ 2011              		@ Function supports interworking.
+ 2012              		@ args = 0, pretend = 0, frame = 8
+ 2013              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2014 0140 0DC0A0E1 		mov	ip, sp
+ 2015              	.LCFI2:
+ 2016              		.cfi_def_cfa_register 12
+ 2017 0144 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2018 0148 04B04CE2 		sub	fp, ip, #4
+ 2019              		.cfi_offset 14, -8
+ 2020              		.cfi_offset 13, -12
+ 2021              		.cfi_offset 11, -16
+ 2022              	.LCFI3:
+ 2023              		.cfi_def_cfa 11, 4
+ 2024 014c 08D04DE2 		sub	sp, sp, #8
+ 2025 0150 10000BE5 		str	r0, [fp, #-16]
+  54:../src/rtc.c  **** 
+  55:../src/rtc.c  **** 	RTCCON |= 0x1; // Habilita la posibilidad de leer/escribir los registros de hora/fecha del RTC
+ 2026              		.loc 1 55 0
+ 2027 0154 18309FE5 		ldr	r3, .L5
+ 2028 0158 14209FE5 		ldr	r2, .L5
+ 2029 015c 002092E5 		ldr	r2, [r2, #0]
+ 2030 0160 012082E3 		orr	r2, r2, #1
+ 2031 0164 002083E5 		str	r2, [r3, #0]
+  56:../src/rtc.c  **** 	//BCDYEAR
+  57:../src/rtc.c  **** 
+  58:../src/rtc.c  **** }
+ 2032              		.loc 1 58 0
+ 2033 0168 0CD04BE2 		sub	sp, fp, #12
+ 2034 016c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2035 0170 1EFF2FE1 		bx	lr
+ 2036              	.L6:
+ 2037              		.align	2
+ 2038              	.L5:
+ 2039 0174 4000D701 		.word	30867520
+ 2040              		.cfi_endproc
+ 2041              	.LFE1:
+ 2043              		.align	2
+ 2044              		.global	rtc_gettime
+ 2046              	rtc_gettime:
+ 2047              	.LFB2:
+  59:../src/rtc.c  **** 
+  60:../src/rtc.c  **** /* 
+  61:../src/rtc.c  **** ** Recupera en la fecha y hora mantenida por el RTC
+  62:../src/rtc.c  **** */
+  63:../src/rtc.c  **** void rtc_gettime( rtc_time_t *rtc_time ) {
+ 2048              		.loc 1 63 0
+ 2049              		.cfi_startproc
+ 2050              		@ Function supports interworking.
+ 2051              		@ args = 0, pretend = 0, frame = 8
+ 2052              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2053 0178 0DC0A0E1 		mov	ip, sp
+ 2054              	.LCFI4:
+ 2055              		.cfi_def_cfa_register 12
+ 2056 017c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2057 0180 04B04CE2 		sub	fp, ip, #4
+ 2058              		.cfi_offset 14, -8
+ 2059              		.cfi_offset 13, -12
+ 2060              		.cfi_offset 11, -16
+ 2061              	.LCFI5:
+ 2062              		.cfi_def_cfa 11, 4
+ 2063 0184 08D04DE2 		sub	sp, sp, #8
+ 2064 0188 10000BE5 		str	r0, [fp, #-16]
+  64:../src/rtc.c  **** 
+  65:../src/rtc.c  **** }
+ 2065              		.loc 1 65 0
+ 2066 018c 0CD04BE2 		sub	sp, fp, #12
+ 2067 0190 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2068 0194 1EFF2FE1 		bx	lr
+ 2069              		.cfi_endproc
+ 2070              	.LFE2:
+ 2072              		.align	2
+ 2073              		.global	rtc_open
+ 2075              	rtc_open:
+ 2076              	.LFB3:
+  66:../src/rtc.c  **** 
+  67:../src/rtc.c  **** /* 
+  68:../src/rtc.c  **** ** Instala, en la tabla de vectores de interrupción, la función isr como RTI de interrupciones po
+  69:../src/rtc.c  **** ** Borra interrupciones pendientes por ticks del RTC
+  70:../src/rtc.c  **** ** Desenmascara globalmente las interrupciones y específicamente las interrupciones por ticks del 
+  71:../src/rtc.c  **** ** Habilita la generación de ticks y fija el valor inicial del contador que los genera: perido = (
+  72:../src/rtc.c  **** */
+  73:../src/rtc.c  **** void rtc_open( void (*isr)(void), uint8 tick_count ) {
+ 2077              		.loc 1 73 0
+ 2078              		.cfi_startproc
+ 2079              		@ Function supports interworking.
+ 2080              		@ args = 0, pretend = 0, frame = 8
+ 2081              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2082 0198 0DC0A0E1 		mov	ip, sp
+ 2083              	.LCFI6:
+ 2084              		.cfi_def_cfa_register 12
+ 2085 019c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2086 01a0 04B04CE2 		sub	fp, ip, #4
+ 2087              		.cfi_offset 14, -8
+ 2088              		.cfi_offset 13, -12
+ 2089              		.cfi_offset 11, -16
+ 2090              	.LCFI7:
+ 2091              		.cfi_def_cfa 11, 4
+ 2092 01a4 08D04DE2 		sub	sp, sp, #8
+ 2093 01a8 10000BE5 		str	r0, [fp, #-16]
+ 2094 01ac 0130A0E1 		mov	r3, r1
+ 2095 01b0 11304BE5 		strb	r3, [fp, #-17]
+  74:../src/rtc.c  **** 
+  75:../src/rtc.c  **** }
+ 2096              		.loc 1 75 0
+ 2097 01b4 0CD04BE2 		sub	sp, fp, #12
+ 2098 01b8 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2099 01bc 1EFF2FE1 		bx	lr
+ 2100              		.cfi_endproc
+ 2101              	.LFE3:
+ 2103              		.align	2
+ 2104              		.global	rtc_close
+ 2106              	rtc_close:
+ 2107              	.LFB4:
+  76:../src/rtc.c  **** 
+  77:../src/rtc.c  **** /* 
+  78:../src/rtc.c  **** ** Deshabilita la generación de ticks
+  79:../src/rtc.c  **** ** Enmascara las interrupciones por ticks del RTC
+  80:../src/rtc.c  **** ** Desinstala la RTI por ticks del RTC 
+  81:../src/rtc.c  **** */
+  82:../src/rtc.c  **** void rtc_close( void ) {
+ 2108              		.loc 1 82 0
+ 2109              		.cfi_startproc
+ 2110              		@ Function supports interworking.
+ 2111              		@ args = 0, pretend = 0, frame = 0
+ 2112              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2113 01c0 0DC0A0E1 		mov	ip, sp
+ 2114              	.LCFI8:
+ 2115              		.cfi_def_cfa_register 12
+ 2116 01c4 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2117 01c8 04B04CE2 		sub	fp, ip, #4
+ 2118              		.cfi_offset 14, -8
+ 2119              		.cfi_offset 13, -12
+ 2120              		.cfi_offset 11, -16
+ 2121              	.LCFI9:
+ 2122              		.cfi_def_cfa 11, 4
+  83:../src/rtc.c  **** 
+  84:../src/rtc.c  **** }
+ 2123              		.loc 1 84 0
+ 2124 01cc 0CD04BE2 		sub	sp, fp, #12
+ 2125 01d0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2126 01d4 1EFF2FE1 		bx	lr
+ 2127              		.cfi_endproc
+ 2128              	.LFE4:
+ 2130              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 rtc.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:1882   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:1885   .text:00000000 rtc_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:1983   .text:000000f8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2004   .text:00000140 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2007   .text:00000140 rtc_puttime
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2039   .text:00000174 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2043   .text:00000178 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2046   .text:00000178 rtc_gettime
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2075   .text:00000198 rtc_open
+C:\Users\USUARI~1\AppData\Local\Temp\ccBXb8ts.s:2106   .text:000001c0 rtc_close
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

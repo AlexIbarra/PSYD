@@ -16,15 +16,13 @@
 **-----------------------------------------------------------------*/
 
 #include <rtc.h>
-#include <s3c44b0x.h>
-#include <s3cev40.h>
 
 extern void isr_TICK_dummy( void );
 
 /*
 ** Configura el RTC desactivando alarma, round reset y generación de ticks
 ** Inicializa el RTC a las 00:00:00 horas del martes 1 de enero de 2013
-** Inicializa a 0 los registros de alarma 
+** Inicializa a 0 los registros de alarma
 */
 void rtc_init( void ) {
 
@@ -50,11 +48,12 @@ void rtc_init( void ) {
 }
 
 /*
-** Actualiza la fecha y hora mantenida por el RTC 
+** Actualiza la fecha y hora mantenida por el RTC
 */
 void rtc_puttime( rtc_time_t *rtc_time ) {
 
 	RTCCON |= 0x1; // Habilita la posibilidad de leer/escribir los registros de hora/fecha del RTC
+	/* Pasamos de Decimal a BCD */
 	BCDYEAR = ((rtc_time->year / 10) << 4)+(rtc_time->year % 10);
 	if(rtc_time->mon < 10)
 		BCDMON = rtc_time->mon;
@@ -87,11 +86,12 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
 
 }
 
-/* 
+/*
 ** Recupera en la fecha y hora mantenida por el RTC
 */
 void rtc_gettime( rtc_time_t *rtc_time ) {
 	RTCCON |= 0x1;
+	/* Pasamos de BCD a Decimal */
 	rtc_time->year = (((BCDYEAR & 0xF0) >> 4) * 10) + (BCDYEAR & 0x0F);
 	rtc_time->mon = (((BCDMON & 0xF0) >> 4) * 10) + (BCDMON & 0x0F);
 	rtc_time->mday = (((BCDDAY & 0xF0) >> 4) * 10) + (BCDDAY & 0x0F);
@@ -112,7 +112,7 @@ void rtc_gettime( rtc_time_t *rtc_time ) {
 	RTCCON &= 0x0;
 }
 
-/* 
+/*
 ** Instala, en la tabla de vectores de interrupción, la función isr como RTI de interrupciones por ticks del RTC
 ** Borra interrupciones pendientes por ticks del RTC
 ** Desenmascara globalmente las interrupciones y específicamente las interrupciones por ticks del RTC
@@ -125,10 +125,10 @@ void rtc_open( void (*isr)(void), uint8 tick_count ) {
 	TICNT = tick_count | (1<<7);
 }
 
-/* 
+/*
 ** Deshabilita la generación de ticks
 ** Enmascara las interrupciones por ticks del RTC
-** Desinstala la RTI por ticks del RTC 
+** Desinstala la RTI por ticks del RTC
 */
 void rtc_close( void ) {
 	TICNT = ~(1<<7);

@@ -50,17 +50,17 @@ static void port_init() {
 	PDATB = ~0;
 	PCONB = 0x14F; // (001.0100.1111)
 	PDATC = ~0;
-	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111) 
-	PUPC = 0x94FB; // (1001.0100.1111.1011) 
+	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111)
+	PUPC = 0x94FB; // (1001.0100.1111.1011)
 	PDATD = ~0;
 	PCOND = 0xAAAA; // (1010.1010.1010.1010)
 	PUPD = 0xFF; // (1111.1111)
 	PDATE = ~0;
 	PCONE = 0x25569; // (10.0101.0101.0110.1001)
-	PUPE = 0x1FB; // (1.1111.1011) 
+	PUPE = 0x1FB; // (1.1111.1011)
 	PDATF = ~0;
 	PCONF = 0x251A; // (00.0000.0010.0101.0001.1010)
-	PUPF = 0x74; // (0.0111.0100)  
+	PUPF = 0x74; // (0.0111.0100)
 	PDATG = ~0;
 	PCONG = 0xF5FF; // (1111.0101.1111.1111)
 	PUPG = 0x30; // (0011.0000)
@@ -103,7 +103,7 @@ void sys_init( void ){
 	INTMOD = 0x0;
 	INTCON = 0x1;
 	install_dummy_isr(); // Instala RTI por defecto a todas los tipos de interrupción
-	EXTINTPND = 0x0; // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
+	EXTINTPND = ~(0x0); // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
 	I_ISPC = 0x0; // Borra todas las interrupciones pendientes
 
 	SET_OPMODE( SVCMODE ); // Pone el procesador en modo SVC
@@ -114,13 +114,13 @@ void sys_init( void ){
 	/* Configuracion del reloj del sistema */
 	LOCKTIME = 0xFFF; //Estabilización del PLL: 512 us --> (1 / 8MHz)×4095
 	PLLCON = 0x38021; //Frecuencia del MCLK_SLOW: 500 KHz
-	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz 
+	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz
 	CLKCON = 0x7FF8; //Modo de funcionamiento normal y Reloj distribuido a todos lo controladores
 	/***************************************/
-	 
-	
 
-	/* Mirar pagina 63 del tema 2 */	
+
+
+	/* Mirar pagina 63 del tema 2 */
 	SBUSCON = 0x8000001B; //Prioridades de bus del sistema fijas: LCD > ZDMA > BDMA > IRQ (por defecto)
 	SYSCFG = 0x0; //Cache deshabilitada
 	port_init();

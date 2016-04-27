@@ -1,11 +1,23 @@
-10:13:57 **** Incremental Build of configuration Debug for project BSP ****
+09:47:12 **** Build of configuration Debug for project BSP ****
 cs-make all 
+'Building file: ../src/keypad.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/keypad.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/keypad.d" -MT"src/keypad.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/keypad.o" "../src/keypad.c"
+'Finished building: ../src/keypad.c'
+' '
 'Building file: ../src/leds.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
 arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/leds.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/leds.d" -MT"src/leds.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/leds.o" "../src/leds.c"
 ../src/leds.c: In function 'led_status':
 ../src/leds.c:44:2: warning: suggest parentheses around '-' inside '>>'
 'Finished building: ../src/leds.c'
+' '
+'Building file: ../src/pbs.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/pbs.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/pbs.d" -MT"src/pbs.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/pbs.o" "../src/pbs.c"
+../src/pbs.c: In function 'pb_timeout_getchar':
+../src/pbs.c:127:9: warning: suggest parentheses around '&&' within '||'
+'Finished building: ../src/pbs.c'
 ' '
 'Building file: ../src/rtc.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
@@ -28,6 +40,11 @@ arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/system.o.lst" -
 ../src/system.c:376:13: warning: 'show_sys_info' defined but not used
 'Finished building: ../src/system.c'
 ' '
+'Building file: ../src/timers.c'
+'Invoking: ARM Sourcery Windows GCC C Compiler'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/timers.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/timers.d" -MT"src/timers.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/timers.o" "../src/timers.c"
+'Finished building: ../src/timers.c'
+' '
 'Building file: ../src/uart.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
 arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/uart.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"src/uart.d" -MT"src/uart.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "src/uart.o" "../src/uart.c"
@@ -37,10 +54,10 @@ arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="src/uart.o.lst" -c 
 ' '
 'Building target: libBSP.a'
 'Invoking: ARM Sourcery Windows GCC Archiver'
-arm-none-eabi-ar -r  "libBSP.a"  ./src/leds.o ./src/rtc.o ./src/segs.o ./src/system.o ./src/uart.o   
+arm-none-eabi-ar -r  "libBSP.a"  ./src/keypad.o ./src/leds.o ./src/pbs.o ./src/rtc.o ./src/segs.o ./src/system.o ./src/timers.o ./src/uart.o   
 arm-none-eabi-ar: creating libBSP.a
 'Finished building target: libBSP.a'
 ' '
 
-10:13:57 Build Finished (took 823ms)
+09:47:14 Build Finished (took 1s.177ms)
 

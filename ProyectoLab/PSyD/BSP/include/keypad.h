@@ -4,14 +4,14 @@
 **    keypad.h  26/2/2015
 **
 **    (c) J.M. Mendias
-**    Programación de Sistemas y Dispositivos
-**    Facultad de Informática. Universidad Complutense de Madrid
+**    Programaciï¿½n de Sistemas y Dispositivos
+**    Facultad de Informï¿½tica. Universidad Complutense de Madrid
 **
-**  Propósito:
+**  Propï¿½sito:
 **    Contiene las definiciones de los prototipos de funciones
-**    para el acceso al keypad de la placa de prototipado S3CEV40  
+**    para el acceso al keypad de la placa de prototipado S3CEV40
 **
-**  Notas de diseño:
+**  Notas de diseï¿½o:
 **
 **-----------------------------------------------------------------*/
 
@@ -20,11 +20,11 @@
 
 #include <common_types.h>
 
-/* 
+/*
 ** Scancodes del keypad
 */
-#define KEYPAD_KEY0 (0x0) /*  Distribución espacial:  */
-#define KEYPAD_KEY1 (0x1)  
+#define KEYPAD_KEY0 (0x0) /*  Distribuciï¿½n espacial:  */
+#define KEYPAD_KEY1 (0x1)
 #define KEYPAD_KEY2 (0x2) /*  KEY0  KEY1  KEY2  KEY3  */
 #define KEYPAD_KEY3 (0x3) /*  KEY4  KEY5  KEY6  KEY7  */
 #define KEYPAD_KEY4 (0x4) /*  KEY8  KEY9  KEYA  KEYB  */
@@ -40,13 +40,13 @@
 #define KEYPAD_KEYE (0xe)
 #define KEYPAD_KEYF (0xf)
 
-/* 
+/*
 ** Errorcodes del keypad
 */
 #define KEYPAD_FAILURE (0xff)  /* Fallo durante el proceso de scan */
 #define KEYPAD_TIMEOUT (0xfe)  /* Tiempo de espera sobrepasado */
 
-/* 
+/*
 ** Status de una tecla
 */
 #define KEY_DOWN   (1)
@@ -58,7 +58,7 @@
 */
 void keypad_init( void );
 
-/* 
+/*
 ** Si hay una tecla presionada devuelve su scancode, en otro caso devuelve KEYPAD_FAILURE
 */
 uint8 keypad_scan( void );
@@ -73,46 +73,46 @@ uint8 keypad_status( uint8 scancode );
 */
 void keypad_wait_keydown( uint8 scancode );
 
-/* 
+/*
 ** Espera a que se presione y depresione la tecla indicada
 */
 void keypad_wait_keyup( uint8 scancode );
 
-/* 
+/*
 ** Espera a que se presione cualquier tecla
 */
 void keypad_wait_any_keydown( void );
 
-/* 
+/*
 ** Espera a que se presione y depresione cualquier tecla
 */
 void keypad_wait_any_keyup( void );
 
-/* 
-** Espera la presión y depresión de una tecla del keypad y devuelve su scancode
-*/ 
+/*
+** Espera la presiï¿½n y depresiï¿½n de una tecla del keypad y devuelve su scancode
+*/
 uint8 keypad_getchar( void );
 
-/* 
-** Espera la presión y depresión de una tecla del keypad y devuelve su scancode y el intervalo en ms que ha estado pulsada (max. 6553ms)
-*/ 
+/*
+** Espera la presiï¿½n y depresiï¿½n de una tecla del keypad y devuelve su scancode y el intervalo en ms que ha estado pulsada (max. 6553ms)
+*/
 uint8 keypad_getchartime( uint16 *ms );
 
 /*
-** Espera un máximo de ms (no mayor de 6553ms) la presión y depresión de una tecla del keypad y devuelve su scancode, en caso contrario devuelve KEYPAD_TIMEOUT
+** Espera un mï¿½ximo de ms (no mayor de 6553ms) la presiï¿½n y depresiï¿½n de una tecla del keypad y devuelve su scancode, en caso contrario devuelve KEYPAD_TIMEOUT
 */
 uint8 keypad_timeout_getchar( uint16 ms );
 
-/* 
-** Instala, en la tabla de vectores de interrupción, la función isr como RTI de interrupciones por presión del keypad
-** Borra interrupciones pendientes por presión del keypad
-** Desenmascara globalmente las interrupciones y específicamente las interrupciones por presión del keypad
+/*
+** Instala, en la tabla de vectores de interrupciï¿½n, la funciï¿½n isr como RTI de interrupciones por presiï¿½n del keypad
+** Borra interrupciones pendientes por presiï¿½n del keypad
+** Desenmascara globalmente las interrupciones y especï¿½ficamente las interrupciones por presiï¿½n del keypad
 */
 void keypad_open( void (*isr)(void) );
 
-/* 
-** Enmascara las interrupciones por presión del keypad
-** Desinstala la RTI por presión del keypad
+/*
+** Enmascara las interrupciones por presiï¿½n del keypad
+** Desinstala la RTI por presiï¿½n del keypad
 */
 void keypad_close( void );
 

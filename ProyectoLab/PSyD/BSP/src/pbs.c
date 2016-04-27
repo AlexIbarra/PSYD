@@ -50,21 +50,40 @@ uint8 pb_status( uint8 scancode ) {
 ** Espera a que se presione el pulsador indicado
 */
 void pb_wait_keydown( uint8 scancode ) {
-
+    if(scancode == PB_LEFT) {
+        while( (PDATG & PB_LEFT) )
+    }
+    else if(scancode == PB_RIGHT) {
+        while( (PDATG & PB_RIGHT) )
+    }
+    sw_delay_ms( PB_KEYDOWN_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
 }
 
 /*
 ** Espera a que se presione y despresione el pulsador indicado
 */
 void pb_wait_keyup( uint8 scancode ) {
+    if(scancode == PB_LEFT) {
+        while( (PDATG & PB_LEFT) )
+        sw_delay_ms( PB_KEYDOWN_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
+        while( !(PDATG & PB_LEFT) )
+        sw_delay_ms( PB_KEYUP_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
 
+    }
+    else if(scancode == PB_RIGHT) {
+        while( (PDATG & PB_RIGHT) )
+        sw_delay_ms( PB_KEYDOWN_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
+        while( !(PDATG & PB_RIGHT) )
+        sw_delay_ms( PB_KEYUP_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
+    }
 }
 
 /*
 ** Espera a que se presione cualquier pulsador
 */
 void pb_wait_any_keydown( void ) {
-
+    while( (PDATG & PB_LEFT) && (PDATG & PB_RIGHT) ); // espera la presión de cualquier pulsador
+    sw_delay_ms( PB_KEYDOWN_DELAY ); // espera SW (el timer 3 está ocupado) fin de rebotes
 }
 
 /*

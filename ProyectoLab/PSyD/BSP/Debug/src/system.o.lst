@@ -101,12 +101,12 @@
  1993 003c E4309FE5 		ldr	r3, .L2+20
  1994 0040 0020E0E3 		mvn	r2, #0
  1995 0044 002083E5 		str	r2, [r3, #0]
-  53:../src/system.c **** 	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111) 
+  53:../src/system.c **** 	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111)
  1996              		.loc 1 53 0
  1997 0048 DC309FE5 		ldr	r3, .L2+24
  1998 004c DC209FE5 		ldr	r2, .L2+28
  1999 0050 002083E5 		str	r2, [r3, #0]
-  54:../src/system.c **** 	PUPC = 0x94FB; // (1001.0100.1111.1011) 
+  54:../src/system.c **** 	PUPC = 0x94FB; // (1001.0100.1111.1011)
  2000              		.loc 1 54 0
  2001 0054 D8309FE5 		ldr	r3, .L2+32
  2002 0058 D8209FE5 		ldr	r2, .L2+36
@@ -136,7 +136,7 @@
  2021 0090 B8309FE5 		ldr	r3, .L2+60
  2022 0094 B8209FE5 		ldr	r2, .L2+64
  2023 0098 002083E5 		str	r2, [r3, #0]
-  60:../src/system.c **** 	PUPE = 0x1FB; // (1.1111.1011) 
+  60:../src/system.c **** 	PUPE = 0x1FB; // (1.1111.1011)
  2024              		.loc 1 60 0
  2025 009c B4309FE5 		ldr	r3, .L2+68
  2026 00a0 B4209FE5 		ldr	r2, .L2+72
@@ -151,7 +151,7 @@
  2033 00b4 A8309FE5 		ldr	r3, .L2+80
  2034 00b8 A8209FE5 		ldr	r2, .L2+84
  2035 00bc 002083E5 		str	r2, [r3, #0]
-  63:../src/system.c **** 	PUPF = 0x74; // (0.0111.0100)  
+  63:../src/system.c **** 	PUPF = 0x74; // (0.0111.0100)
  2036              		.loc 1 63 0
  2037 00c0 A4309FE5 		ldr	r3, .L2+88
  2038 00c4 7420A0E3 		mov	r2, #116
@@ -302,10 +302,10 @@
  105:../src/system.c **** 	install_dummy_isr(); // Instala RTI por defecto a todas los tipos de interrupción
  2144              		.loc 1 105 0
  2145 01e0 370000EB 		bl	install_dummy_isr
- 106:../src/system.c **** 	EXTINTPND = 0x0; // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
+ 106:../src/system.c **** 	EXTINTPND = ~(0x0); // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
  2146              		.loc 1 106 0
  2147 01e4 B8309FE5 		ldr	r3, .L5+28
- 2148 01e8 0020A0E3 		mov	r2, #0
+ 2148 01e8 0020E0E3 		mvn	r2, #0
  2149 01ec 002083E5 		str	r2, [r3, #0]
  107:../src/system.c **** 	I_ISPC = 0x0; // Borra todas las interrupciones pendientes
  2150              		.loc 1 107 0
@@ -368,7 +368,7 @@
  2198 0238 7637A0E3 		mov	r3, #30932992
  2199 023c 70209FE5 		ldr	r2, .L5+44
  2200 0240 002083E5 		str	r2, [r3, #0]
- 117:../src/system.c **** 	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz 
+ 117:../src/system.c **** 	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz
  2201              		.loc 1 117 0
  2202 0244 6C309FE5 		ldr	r3, .L5+48
  2203 0248 0820A0E3 		mov	r2, #8
@@ -379,10 +379,10 @@
  2207 0254 64209FE5 		ldr	r2, .L5+56
  2208 0258 002083E5 		str	r2, [r3, #0]
  119:../src/system.c **** 	/***************************************/
- 120:../src/system.c **** 	 
- 121:../src/system.c **** 	
+ 120:../src/system.c **** 
+ 121:../src/system.c **** 
  122:../src/system.c **** 
- 123:../src/system.c **** 	/* Mirar pagina 63 del tema 2 */	
+ 123:../src/system.c **** 	/* Mirar pagina 63 del tema 2 */
  124:../src/system.c **** 	SBUSCON = 0x8000001B; //Prioridades de bus del sistema fijas: LCD > ZDMA > BDMA > IRQ (por defecto
  2209              		.loc 1 124 0
  2210 025c 7137A0E3 		mov	r3, #29622272
@@ -2606,120 +2606,120 @@
  4105              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 system.c
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:1957   .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:1959   .text:00000000 port_init
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2067   .text:00000114 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2100   .text:0000018c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2103   .text:0000018c sys_init
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2248   .text:000002c4 install_dummy_isr
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2228   .text:00000288 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2246   .text:000002c4 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2404   .text:00000468 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2482   .text:00000570 isr_RESET_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2720   .text:0000064c isr_UNDEF_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2767   .text:00000678 isr_SWI_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2578   .text:000005c8 isr_PABORT_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2530   .text:0000059c isr_DABORT_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2672   .text:00000620 isr_IRQ_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2625   .text:000005f4 isr_FIQ_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2908   .text:000006fc isr_ADC_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2955   .text:00000728 isr_RTC_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3098   .text:000007ac isr_UTXD1_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3146   .text:000007d8 isr_UTXD0_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3193   .text:00000804 isr_SIO_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3240   .text:00000830 isr_IIC_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3282   .text:0000085c isr_URXD1_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3330   .text:00000888 isr_URXD0_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3378   .text:000008b4 isr_TIMER5_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3426   .text:000008e0 isr_TIMER4_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3474   .text:0000090c isr_TIMER3_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3522   .text:00000938 isr_TIMER2_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3570   .text:00000964 isr_TIMER1_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3618   .text:00000990 isr_TIMER0_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3666   .text:000009bc isr_UERR01_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3713   .text:000009e8 isr_WDT_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3761   .text:00000a14 isr_BDMA1_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3809   .text:00000a40 isr_BDMA0_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3857   .text:00000a6c isr_ZDMA1_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3905   .text:00000a98 isr_ZDMA0_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3952   .text:00000ac4 isr_PB_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4000   .text:00000af0 isr_ETHERNET_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3050   .text:00000780 isr_TS_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3003   .text:00000754 isr_KEYPAD_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2861   .text:000006d0 isr_USB_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2814   .text:000006a4 isr_TICK_dummy
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2474   .rodata:00000000 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2479   .text:00000570 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2517   .text:00000598 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2527   .text:0000059c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2565   .text:000005c4 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2575   .text:000005c8 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2613   .text:000005f0 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2622   .text:000005f4 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2660   .text:0000061c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2669   .text:00000620 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2707   .text:00000648 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2717   .text:0000064c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2755   .text:00000674 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2764   .text:00000678 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2802   .text:000006a0 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2811   .text:000006a4 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2849   .text:000006cc $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2858   .text:000006d0 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2896   .text:000006f8 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2905   .text:000006fc $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2943   .text:00000724 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2952   .text:00000728 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:2990   .text:00000750 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3000   .text:00000754 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3038   .text:0000077c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3047   .text:00000780 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3085   .text:000007a8 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3095   .text:000007ac $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3133   .text:000007d4 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3143   .text:000007d8 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3181   .text:00000800 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3190   .text:00000804 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3228   .text:0000082c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3237   .text:00000830 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3275   .text:00000858 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3279   .text:0000085c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3317   .text:00000884 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3327   .text:00000888 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3365   .text:000008b0 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3375   .text:000008b4 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3413   .text:000008dc $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3423   .text:000008e0 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3461   .text:00000908 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3471   .text:0000090c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3509   .text:00000934 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3519   .text:00000938 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3557   .text:00000960 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3567   .text:00000964 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3605   .text:0000098c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3615   .text:00000990 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3653   .text:000009b8 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3663   .text:000009bc $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3701   .text:000009e4 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3710   .text:000009e8 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3748   .text:00000a10 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3758   .text:00000a14 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3796   .text:00000a3c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3806   .text:00000a40 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3844   .text:00000a68 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3854   .text:00000a6c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3892   .text:00000a94 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3902   .text:00000a98 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3940   .text:00000ac0 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3949   .text:00000ac4 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3987   .text:00000aec $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:3997   .text:00000af0 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4035   .text:00000b18 $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4045   .text:00000b1c $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4047   .text:00000b1c show_sys_info
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4074   .text:00000b3c $d
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4078   .text:00000b40 $a
-C:\Users\USUARI~1\AppData\Local\Temp\ccFtp5DJ.s:4081   .text:00000b40 sleep
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:1957   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:1959   .text:00000000 port_init
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2067   .text:00000114 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2100   .text:0000018c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2103   .text:0000018c sys_init
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2248   .text:000002c4 install_dummy_isr
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2228   .text:00000288 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2246   .text:000002c4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2404   .text:00000468 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2482   .text:00000570 isr_RESET_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2720   .text:0000064c isr_UNDEF_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2767   .text:00000678 isr_SWI_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2578   .text:000005c8 isr_PABORT_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2530   .text:0000059c isr_DABORT_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2672   .text:00000620 isr_IRQ_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2625   .text:000005f4 isr_FIQ_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2908   .text:000006fc isr_ADC_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2955   .text:00000728 isr_RTC_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3098   .text:000007ac isr_UTXD1_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3146   .text:000007d8 isr_UTXD0_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3193   .text:00000804 isr_SIO_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3240   .text:00000830 isr_IIC_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3282   .text:0000085c isr_URXD1_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3330   .text:00000888 isr_URXD0_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3378   .text:000008b4 isr_TIMER5_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3426   .text:000008e0 isr_TIMER4_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3474   .text:0000090c isr_TIMER3_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3522   .text:00000938 isr_TIMER2_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3570   .text:00000964 isr_TIMER1_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3618   .text:00000990 isr_TIMER0_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3666   .text:000009bc isr_UERR01_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3713   .text:000009e8 isr_WDT_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3761   .text:00000a14 isr_BDMA1_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3809   .text:00000a40 isr_BDMA0_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3857   .text:00000a6c isr_ZDMA1_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3905   .text:00000a98 isr_ZDMA0_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3952   .text:00000ac4 isr_PB_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4000   .text:00000af0 isr_ETHERNET_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3050   .text:00000780 isr_TS_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3003   .text:00000754 isr_KEYPAD_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2861   .text:000006d0 isr_USB_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2814   .text:000006a4 isr_TICK_dummy
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2474   .rodata:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2479   .text:00000570 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2517   .text:00000598 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2527   .text:0000059c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2565   .text:000005c4 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2575   .text:000005c8 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2613   .text:000005f0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2622   .text:000005f4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2660   .text:0000061c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2669   .text:00000620 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2707   .text:00000648 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2717   .text:0000064c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2755   .text:00000674 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2764   .text:00000678 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2802   .text:000006a0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2811   .text:000006a4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2849   .text:000006cc $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2858   .text:000006d0 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2896   .text:000006f8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2905   .text:000006fc $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2943   .text:00000724 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2952   .text:00000728 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:2990   .text:00000750 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3000   .text:00000754 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3038   .text:0000077c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3047   .text:00000780 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3085   .text:000007a8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3095   .text:000007ac $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3133   .text:000007d4 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3143   .text:000007d8 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3181   .text:00000800 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3190   .text:00000804 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3228   .text:0000082c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3237   .text:00000830 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3275   .text:00000858 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3279   .text:0000085c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3317   .text:00000884 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3327   .text:00000888 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3365   .text:000008b0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3375   .text:000008b4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3413   .text:000008dc $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3423   .text:000008e0 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3461   .text:00000908 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3471   .text:0000090c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3509   .text:00000934 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3519   .text:00000938 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3557   .text:00000960 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3567   .text:00000964 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3605   .text:0000098c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3615   .text:00000990 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3653   .text:000009b8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3663   .text:000009bc $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3701   .text:000009e4 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3710   .text:000009e8 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3748   .text:00000a10 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3758   .text:00000a14 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3796   .text:00000a3c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3806   .text:00000a40 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3844   .text:00000a68 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3854   .text:00000a6c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3892   .text:00000a94 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3902   .text:00000a98 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3940   .text:00000ac0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3949   .text:00000ac4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3987   .text:00000aec $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:3997   .text:00000af0 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4035   .text:00000b18 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4045   .text:00000b1c $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4047   .text:00000b1c show_sys_info
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4074   .text:00000b3c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4078   .text:00000b40 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cczSfvUT.s:4081   .text:00000b40 sleep
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

@@ -32,8 +32,8 @@ void rtc_init( void ) {
 	RTCCON = 0x1; // Debe habilitar la posibilidad de leer/escribir los registros de hora/fecha del RTC
 	BCDYEAR = 0x2016; // 2016
 	BCDMON = 0x1; // Enero
-	BCDDAY = 0x6; // El dia Jueves es fue 1 de enero (Domingo es el dia 1º de la semana)
-	BCDDATE = 0x1; // Dia 1
+	BCDDAY = 0x6; // El dia del mes Jueves es fue 1 de enero (Domingo es el dia 1º de la semana)
+	BCDDATE = 0x1; // Dia semana 1 lunes
 	BCDHOUR = 0x0; // Hora 00
 	BCDMIN = 0x0; // Minuto 00
 	BCDSEC = 0x0; // Segundo 00
@@ -60,12 +60,12 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
 	else
 		BCDMON = ((rtc_time->mon / 10) << 4)+(rtc_time->mon % 10);
 
-	BCDDAY = rtc_time->wday;
+	BCDDATE = rtc_time->wday;
 
 	if(rtc_time->mday < 10)
-		BCDDATE = rtc_time->mday;
+		BCDDAY = rtc_time->mday;
 	else
-		BCDDATE = ((rtc_time->mday / 10) << 4)+(rtc_time->mday % 10);
+		BCDDAY = ((rtc_time->mday / 10) << 4)+(rtc_time->mday % 10);
 
 	if(rtc_time->hour < 10)
 		BCDHOUR = rtc_time->hour;

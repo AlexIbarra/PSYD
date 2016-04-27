@@ -1,4 +1,4 @@
-10:14:01 **** Incremental Build of configuration Debug for project lab5 ****
+09:47:17 **** Build of configuration Debug for project lab5 ****
 cs-make all 
 'Building file: ../lab5.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
@@ -25,71 +25,7 @@ arm-none-eabi-size  --format=berkeley lab5.elf
    9424	      0	      0	   9424	   24d0	lab5.elf
 'Finished building: lab5.siz'
 ' '
-10:15:07 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:20:59 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:33:09 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:36:23 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:39:56 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:42:31 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:43:21 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:46:16 **** Incremental Build of configuration Debug for project lab5 ****
-cs-make all 
-'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
-   text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
-' '
-10:47:17 **** Incremental Build of configuration Debug for project lab5 ****
+09:47:29 **** Incremental Build of configuration Debug for project lab5 ****
 cs-make all 
 'Invoking: ARM Sourcery Windows GNU Print Size'
 arm-none-eabi-size  --format=berkeley lab5.elf

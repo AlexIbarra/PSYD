@@ -11,25 +11,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   3 .debug_info   00000be6  00000000  00000000  0000a7db  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_line   000004d7  00000000  00000000  0000b3c1  2**0
+  4 .debug_line   000004e4  00000000  00000000  0000b3c1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_macinfo 000134ee  00000000  00000000  0000b898  2**0
+  5 .debug_macinfo 00013e32  00000000  00000000  0000b8a5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_loc    00000948  00000000  00000000  0001ed86  2**0
+  6 .debug_loc    00000948  00000000  00000000  0001f6d7  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_pubnames 000003da  00000000  00000000  0001f6ce  2**0
+  7 .debug_pubnames 000003da  00000000  00000000  0002001f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_pubtypes 000000c4  00000000  00000000  0001faa8  2**0
+  8 .debug_pubtypes 000000c4  00000000  00000000  000203f9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_aranges 00000080  00000000  00000000  0001fb6c  2**0
+  9 .debug_aranges 00000080  00000000  00000000  000204bd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000401  00000000  00000000  0001fbec  2**0
+ 10 .debug_str    00000401  00000000  00000000  0002053d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .comment      0000002a  00000000  00000000  0001ffed  2**0
+ 11 .comment      0000002a  00000000  00000000  0002093e  2**0
                   CONTENTS, READONLY
- 12 .ARM.attributes 00000032  00000000  00000000  00020017  2**0
+ 12 .ARM.attributes 00000032  00000000  00000000  00020968  2**0
                   CONTENTS, READONLY
- 13 .debug_frame  0000089c  00000000  00000000  0002004c  2**2
+ 13 .debug_frame  0000089c  00000000  00000000  0002099c  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -125,7 +125,7 @@ void main( void )
  c1000cc:	e1a03000 	mov	r3, r0
  c1000d0:	e20330ff 	and	r3, r3, #255	; 0xff
  c1000d4:	e54b300f 	strb	r3, [fp, #-15]
-	uart0_puts( "  - A�o (2 digitos): " );
+	uart0_puts( "  - A�o (2 digitos): " );
  c1000d8:	e59f008c 	ldr	r0, [pc, #140]	; c10016c <main+0x16c>
  c1000dc:	eb0005e9 	bl	c101888 <uart0_puts>
 	rtc_time.year = (uint8) uart0_getint();
@@ -264,7 +264,7 @@ void isr_tick( void )
 /*
 ** Configura el RTC desactivando alarma, round reset y generación de ticks
 ** Inicializa el RTC a las 00:00:00 horas del martes 1 de enero de 2013
-** Inicializa a 0 los registros de alarma 
+** Inicializa a 0 los registros de alarma
 */
 void rtc_init( void ) {
  c100240:	e1a0c00d 	mov	ip, sp
@@ -295,11 +295,11 @@ void rtc_init( void ) {
  c100288:	e59f30c0 	ldr	r3, [pc, #192]	; c100350 <rtc_init+0x110>
  c10028c:	e3a02001 	mov	r2, #1
  c100290:	e5832000 	str	r2, [r3]
-	BCDDAY = 0x6; // El dia Jueves es fue 1 de enero (Domingo es el dia 1º de la semana)
+	BCDDAY = 0x6; // El dia del mes Jueves es fue 1 de enero (Domingo es el dia 1º de la semana)
  c100294:	e59f30b8 	ldr	r3, [pc, #184]	; c100354 <rtc_init+0x114>
  c100298:	e3a02006 	mov	r2, #6
  c10029c:	e5832000 	str	r2, [r3]
-	BCDDATE = 0x1; // Dia 1
+	BCDDATE = 0x1; // Dia semana 1 lunes
  c1002a0:	e59f30b0 	ldr	r3, [pc, #176]	; c100358 <rtc_init+0x118>
  c1002a4:	e3a02001 	mov	r2, #1
  c1002a8:	e5832000 	str	r2, [r3]
@@ -372,7 +372,7 @@ void rtc_init( void ) {
 0c100380 <rtc_puttime>:
 
 /*
-** Actualiza la fecha y hora mantenida por el RTC 
+** Actualiza la fecha y hora mantenida por el RTC
 */
 void rtc_puttime( rtc_time_t *rtc_time ) {
  c100380:	e1a0c00d 	mov	ip, sp
@@ -387,6 +387,7 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
  c10039c:	e5922000 	ldr	r2, [r2]
  c1003a0:	e3822001 	orr	r2, r2, #1
  c1003a4:	e5832000 	str	r2, [r3]
+	/* Pasamos de Decimal a BCD */
 	BCDYEAR = ((rtc_time->year / 10) << 4)+(rtc_time->year % 10);
  c1003a8:	e59f02d8 	ldr	r0, [pc, #728]	; c100688 <rtc_puttime+0x308>
  c1003ac:	e51b3010 	ldr	r3, [fp, #-16]
@@ -444,7 +445,7 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
  c10046c:	e08c3003 	add	r3, ip, r3
  c100470:	e5803000 	str	r3, [r0]
 
-	BCDDAY = rtc_time->wday;
+	BCDDATE = rtc_time->wday;
  c100474:	e59f3218 	ldr	r3, [pc, #536]	; c100694 <rtc_puttime+0x314>
  c100478:	e51b2010 	ldr	r2, [fp, #-16]
  c10047c:	e5d22004 	ldrb	r2, [r2, #4]
@@ -455,14 +456,14 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
  c100488:	e5d33003 	ldrb	r3, [r3, #3]
  c10048c:	e3530009 	cmp	r3, #9
  c100490:	8a000004 	bhi	c1004a8 <rtc_puttime+0x128>
-		BCDDATE = rtc_time->mday;
+		BCDDAY = rtc_time->mday;
  c100494:	e59f31fc 	ldr	r3, [pc, #508]	; c100698 <rtc_puttime+0x318>
  c100498:	e51b2010 	ldr	r2, [fp, #-16]
  c10049c:	e5d22003 	ldrb	r2, [r2, #3]
  c1004a0:	e5832000 	str	r2, [r3]
  c1004a4:	ea000014 	b	c1004fc <rtc_puttime+0x17c>
 	else
-		BCDDATE = ((rtc_time->mday / 10) << 4)+(rtc_time->mday % 10);
+		BCDDAY = ((rtc_time->mday / 10) << 4)+(rtc_time->mday % 10);
  c1004a8:	e59f01e8 	ldr	r0, [pc, #488]	; c100698 <rtc_puttime+0x318>
  c1004ac:	e51b3010 	ldr	r3, [fp, #-16]
  c1004b0:	e5d32003 	ldrb	r2, [r3, #3]
@@ -605,15 +606,15 @@ void rtc_puttime( rtc_time_t *rtc_time ) {
  c100688:	01d70088 	.word	0x01d70088
  c10068c:	cccccccd 	.word	0xcccccccd
  c100690:	01d70084 	.word	0x01d70084
- c100694:	01d7007c 	.word	0x01d7007c
- c100698:	01d70080 	.word	0x01d70080
+ c100694:	01d70080 	.word	0x01d70080
+ c100698:	01d7007c 	.word	0x01d7007c
  c10069c:	01d70078 	.word	0x01d70078
  c1006a0:	01d70074 	.word	0x01d70074
  c1006a4:	01d70070 	.word	0x01d70070
 
 0c1006a8 <rtc_gettime>:
 
-/* 
+/*
 ** Recupera en la fecha y hora mantenida por el RTC
 */
 void rtc_gettime( rtc_time_t *rtc_time ) {
@@ -628,6 +629,7 @@ void rtc_gettime( rtc_time_t *rtc_time ) {
  c1006c4:	e5922000 	ldr	r2, [r2]
  c1006c8:	e3822001 	orr	r2, r2, #1
  c1006cc:	e5832000 	str	r2, [r3]
+	/* Pasamos de BCD a Decimal */
 	rtc_time->year = (((BCDYEAR & 0xF0) >> 4) * 10) + (BCDYEAR & 0x0F);
  c1006d0:	e59f3454 	ldr	r3, [pc, #1108]	; c100b2c <rtc_gettime+0x484>
  c1006d4:	e5933000 	ldr	r3, [r3]
@@ -979,10 +981,10 @@ void rtc_open( void (*isr)(void), uint8 tick_count ) {
  c100bc0:	01d7008c 	.word	0x01d7008c
 
 0c100bc4 <rtc_close>:
-/* 
+/*
 ** Deshabilita la generación de ticks
 ** Enmascara las interrupciones por ticks del RTC
-** Desinstala la RTI por ticks del RTC 
+** Desinstala la RTI por ticks del RTC
 */
 void rtc_close( void ) {
  c100bc4:	e1a0c00d 	mov	ip, sp
@@ -1044,11 +1046,11 @@ static void port_init() {
  c100c54:	e59f30e4 	ldr	r3, [pc, #228]	; c100d40 <port_init+0x128>
  c100c58:	e3e02000 	mvn	r2, #0
  c100c5c:	e5832000 	str	r2, [r3]
-	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111) 
+	PCONC = 0x5FF555FF; // (0101.1111.1111.0101.0101.0101.1111.1111)
  c100c60:	e59f30dc 	ldr	r3, [pc, #220]	; c100d44 <port_init+0x12c>
  c100c64:	e59f20dc 	ldr	r2, [pc, #220]	; c100d48 <port_init+0x130>
  c100c68:	e5832000 	str	r2, [r3]
-	PUPC = 0x94FB; // (1001.0100.1111.1011) 
+	PUPC = 0x94FB; // (1001.0100.1111.1011)
  c100c6c:	e59f30d8 	ldr	r3, [pc, #216]	; c100d4c <port_init+0x134>
  c100c70:	e59f20d8 	ldr	r2, [pc, #216]	; c100d50 <port_init+0x138>
  c100c74:	e5832000 	str	r2, [r3]
@@ -1072,7 +1074,7 @@ static void port_init() {
  c100ca8:	e59f30b8 	ldr	r3, [pc, #184]	; c100d68 <port_init+0x150>
  c100cac:	e59f20b8 	ldr	r2, [pc, #184]	; c100d6c <port_init+0x154>
  c100cb0:	e5832000 	str	r2, [r3]
-	PUPE = 0x1FB; // (1.1111.1011) 
+	PUPE = 0x1FB; // (1.1111.1011)
  c100cb4:	e59f30b4 	ldr	r3, [pc, #180]	; c100d70 <port_init+0x158>
  c100cb8:	e59f20b4 	ldr	r2, [pc, #180]	; c100d74 <port_init+0x15c>
  c100cbc:	e5832000 	str	r2, [r3]
@@ -1084,7 +1086,7 @@ static void port_init() {
  c100ccc:	e59f30a8 	ldr	r3, [pc, #168]	; c100d7c <port_init+0x164>
  c100cd0:	e59f20a8 	ldr	r2, [pc, #168]	; c100d80 <port_init+0x168>
  c100cd4:	e5832000 	str	r2, [r3]
-	PUPF = 0x74; // (0.0111.0100)  
+	PUPF = 0x74; // (0.0111.0100)
  c100cd8:	e59f30a4 	ldr	r3, [pc, #164]	; c100d84 <port_init+0x16c>
  c100cdc:	e3a02074 	mov	r2, #116	; 0x74
  c100ce0:	e5832000 	str	r2, [r3]
@@ -1183,9 +1185,9 @@ void sys_init( void ){
  c100df4:	e5832000 	str	r2, [r3]
 	install_dummy_isr(); // Instala RTI por defecto a todas los tipos de interrupción
  c100df8:	eb000037 	bl	c100edc <install_dummy_isr>
-	EXTINTPND = 0x0; // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
+	EXTINTPND = ~(0x0); // Borra interrupciones externas pendientes por  la línea EINT[7:4] ()
  c100dfc:	e59f30b8 	ldr	r3, [pc, #184]	; c100ebc <sys_init+0x118>
- c100e00:	e3a02000 	mov	r2, #0
+ c100e00:	e3e02000 	mvn	r2, #0
  c100e04:	e5832000 	str	r2, [r3]
 	I_ISPC = 0x0; // Borra todas las interrupciones pendientes
  c100e08:	e59f30b0 	ldr	r3, [pc, #176]	; c100ec0 <sys_init+0x11c>
@@ -1218,7 +1220,7 @@ void sys_init( void ){
  c100e50:	e3a03776 	mov	r3, #30932992	; 0x1d80000
  c100e54:	e59f2070 	ldr	r2, [pc, #112]	; c100ecc <sys_init+0x128>
  c100e58:	e5832000 	str	r2, [r3]
-	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz 
+	CLKSLOW = 0x8; //Frecuencia del MCLK: 64 MHz
  c100e5c:	e59f306c 	ldr	r3, [pc, #108]	; c100ed0 <sys_init+0x12c>
  c100e60:	e3a02008 	mov	r2, #8
  c100e64:	e5832000 	str	r2, [r3]
@@ -1227,10 +1229,10 @@ void sys_init( void ){
  c100e6c:	e59f2064 	ldr	r2, [pc, #100]	; c100ed8 <sys_init+0x134>
  c100e70:	e5832000 	str	r2, [r3]
 	/***************************************/
-	 
-	
 
-	/* Mirar pagina 63 del tema 2 */	
+
+
+	/* Mirar pagina 63 del tema 2 */
 	SBUSCON = 0x8000001B; //Prioridades de bus del sistema fijas: LCD > ZDMA > BDMA > IRQ (por defecto)
  c100e74:	e3a03771 	mov	r3, #29622272	; 0x1c40000
  c100e78:	e3a0216e 	mov	r2, #-2147483621	; 0x8000001b

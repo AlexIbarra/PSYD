@@ -1,0 +1,218 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"at24c04.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/at24c04.c"
+ 1888              		.align	2
+ 1889              		.global	at24c04_clear
+ 1891              	at24c04_clear:
+ 1892              	.LFB0:
+   1:../src/at24c04.c **** /*-------------------------------------------------------------------
+   2:../src/at24c04.c **** **
+   3:../src/at24c04.c **** **  Fichero:
+   4:../src/at24c04.c **** **    at24c04.h  17/5/2013
+   5:../src/at24c04.c **** **
+   6:../src/at24c04.c **** **    (c) J.M. Mendias
+   7:../src/at24c04.c **** **    Programación de Sistemas y Dispositivos
+   8:../src/at24c04.c **** **    Facultad de Informática. Universidad Complutense de Madrid
+   9:../src/at24c04.c **** **
+  10:../src/at24c04.c **** **  Propósito:
+  11:../src/at24c04.c **** **    Contiene las definiciones de los prototipos de funciones
+  12:../src/at24c04.c **** **    para la lectura/escritura de la EEPROM serie AT24C04
+  13:../src/at24c04.c **** **
+  14:../src/at24c04.c **** **  Notas de diseño:
+  15:../src/at24c04.c **** **
+  16:../src/at24c04.c **** **-----------------------------------------------------------------*/
+  17:../src/at24c04.c **** 
+  18:../src/at24c04.c **** #include <at24c04.h>
+  19:../src/at24c04.c **** #include <s3c44b0x.h>
+  20:../src/at24c04.c **** #include <s3cev40.h>
+  21:../src/at24c04.c **** 
+  22:../src/at24c04.c **** /*
+  23:../src/at24c04.c **** ** Borra al completo el contenido de la memoria
+  24:../src/at24c04.c **** */
+  25:../src/at24c04.c **** void at24c04_clear( void ){
+ 1893              		.loc 1 25 0
+ 1894              		.cfi_startproc
+ 1895              		@ Function supports interworking.
+ 1896              		@ args = 0, pretend = 0, frame = 0
+ 1897              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1898 0000 0DC0A0E1 		mov	ip, sp
+ 1899              	.LCFI0:
+ 1900              		.cfi_def_cfa_register 12
+ 1901 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1902 0008 04B04CE2 		sub	fp, ip, #4
+ 1903              		.cfi_offset 14, -8
+ 1904              		.cfi_offset 13, -12
+ 1905              		.cfi_offset 11, -16
+ 1906              	.LCFI1:
+ 1907              		.cfi_def_cfa 11, 4
+  26:../src/at24c04.c **** 
+  27:../src/at24c04.c **** }
+ 1908              		.loc 1 27 0
+ 1909 000c 0CD04BE2 		sub	sp, fp, #12
+ 1910 0010 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1911 0014 1EFF2FE1 		bx	lr
+ 1912              		.cfi_endproc
+ 1913              	.LFE0:
+ 1915              		.align	2
+ 1916              		.global	at24c04_bytewrite
+ 1918              	at24c04_bytewrite:
+ 1919              	.LFB1:
+  28:../src/at24c04.c **** 
+  29:../src/at24c04.c **** /*
+  30:../src/at24c04.c **** ** Realiza una escritura aleatoria en la dirección indicada
+  31:../src/at24c04.c **** */
+  32:../src/at24c04.c **** void at24c04_bytewrite( uint16 addr, uint8 data ){
+ 1920              		.loc 1 32 0
+ 1921              		.cfi_startproc
+ 1922              		@ Function supports interworking.
+ 1923              		@ args = 0, pretend = 0, frame = 8
+ 1924              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1925 0018 0DC0A0E1 		mov	ip, sp
+ 1926              	.LCFI2:
+ 1927              		.cfi_def_cfa_register 12
+ 1928 001c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1929 0020 04B04CE2 		sub	fp, ip, #4
+ 1930              		.cfi_offset 14, -8
+ 1931              		.cfi_offset 13, -12
+ 1932              		.cfi_offset 11, -16
+ 1933              	.LCFI3:
+ 1934              		.cfi_def_cfa 11, 4
+ 1935 0024 08D04DE2 		sub	sp, sp, #8
+ 1936 0028 0020A0E1 		mov	r2, r0
+ 1937 002c 0130A0E1 		mov	r3, r1
+ 1938 0030 BE204BE1 		strh	r2, [fp, #-14]	@ movhi
+ 1939 0034 0F304BE5 		strb	r3, [fp, #-15]
+  33:../src/at24c04.c **** 
+  34:../src/at24c04.c **** }
+ 1940              		.loc 1 34 0
+ 1941 0038 0CD04BE2 		sub	sp, fp, #12
+ 1942 003c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1943 0040 1EFF2FE1 		bx	lr
+ 1944              		.cfi_endproc
+ 1945              	.LFE1:
+ 1947              		.align	2
+ 1948              		.global	at24c04_byteread
+ 1950              	at24c04_byteread:
+ 1951              	.LFB2:
+  35:../src/at24c04.c **** 
+  36:../src/at24c04.c **** /*
+  37:../src/at24c04.c **** ** Realiza una lectura aleatoria de la dirección indicada
+  38:../src/at24c04.c **** */
+  39:../src/at24c04.c **** void at24c04_byteread( uint16 addr, uint8 *data ){
+ 1952              		.loc 1 39 0
+ 1953              		.cfi_startproc
+ 1954              		@ Function supports interworking.
+ 1955              		@ args = 0, pretend = 0, frame = 8
+ 1956              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1957 0044 0DC0A0E1 		mov	ip, sp
+ 1958              	.LCFI4:
+ 1959              		.cfi_def_cfa_register 12
+ 1960 0048 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1961 004c 04B04CE2 		sub	fp, ip, #4
+ 1962              		.cfi_offset 14, -8
+ 1963              		.cfi_offset 13, -12
+ 1964              		.cfi_offset 11, -16
+ 1965              	.LCFI5:
+ 1966              		.cfi_def_cfa 11, 4
+ 1967 0050 08D04DE2 		sub	sp, sp, #8
+ 1968 0054 0030A0E1 		mov	r3, r0
+ 1969 0058 14100BE5 		str	r1, [fp, #-20]
+ 1970 005c BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+  40:../src/at24c04.c **** 
+  41:../src/at24c04.c **** }
+ 1971              		.loc 1 41 0
+ 1972 0060 0CD04BE2 		sub	sp, fp, #12
+ 1973 0064 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1974 0068 1EFF2FE1 		bx	lr
+ 1975              		.cfi_endproc
+ 1976              	.LFE2:
+ 1978              		.align	2
+ 1979              		.global	at24c04_load
+ 1981              	at24c04_load:
+ 1982              	.LFB3:
+  42:../src/at24c04.c **** 
+  43:../src/at24c04.c **** /*
+  44:../src/at24c04.c **** ** Realiza una lectura secuencial de la memoria completa
+  45:../src/at24c04.c **** */
+  46:../src/at24c04.c **** void at24c04_load( uint8 *buffer ){
+ 1983              		.loc 1 46 0
+ 1984              		.cfi_startproc
+ 1985              		@ Function supports interworking.
+ 1986              		@ args = 0, pretend = 0, frame = 8
+ 1987              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1988 006c 0DC0A0E1 		mov	ip, sp
+ 1989              	.LCFI6:
+ 1990              		.cfi_def_cfa_register 12
+ 1991 0070 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1992 0074 04B04CE2 		sub	fp, ip, #4
+ 1993              		.cfi_offset 14, -8
+ 1994              		.cfi_offset 13, -12
+ 1995              		.cfi_offset 11, -16
+ 1996              	.LCFI7:
+ 1997              		.cfi_def_cfa 11, 4
+ 1998 0078 08D04DE2 		sub	sp, sp, #8
+ 1999 007c 10000BE5 		str	r0, [fp, #-16]
+  47:../src/at24c04.c **** 
+  48:../src/at24c04.c **** }
+ 2000              		.loc 1 48 0
+ 2001 0080 0CD04BE2 		sub	sp, fp, #12
+ 2002 0084 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2003 0088 1EFF2FE1 		bx	lr
+ 2004              		.cfi_endproc
+ 2005              	.LFE3:
+ 2007              		.align	2
+ 2008              		.global	at24c04_store
+ 2010              	at24c04_store:
+ 2011              	.LFB4:
+  49:../src/at24c04.c **** 
+  50:../src/at24c04.c **** /*
+  51:../src/at24c04.c **** ** Realiza una escritura paginada de la memoria completa
+  52:../src/at24c04.c **** */
+  53:../src/at24c04.c **** void at24c04_store( uint8 *buffer ){
+ 2012              		.loc 1 53 0
+ 2013              		.cfi_startproc
+ 2014              		@ Function supports interworking.
+ 2015              		@ args = 0, pretend = 0, frame = 8
+ 2016              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2017 008c 0DC0A0E1 		mov	ip, sp
+ 2018              	.LCFI8:
+ 2019              		.cfi_def_cfa_register 12
+ 2020 0090 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2021 0094 04B04CE2 		sub	fp, ip, #4
+ 2022              		.cfi_offset 14, -8
+ 2023              		.cfi_offset 13, -12
+ 2024              		.cfi_offset 11, -16
+ 2025              	.LCFI9:
+ 2026              		.cfi_def_cfa 11, 4
+ 2027 0098 08D04DE2 		sub	sp, sp, #8
+ 2028 009c 10000BE5 		str	r0, [fp, #-16]
+  54:../src/at24c04.c **** 
+  55:../src/at24c04.c **** }
+ 2029              		.loc 1 55 0
+ 2030 00a0 0CD04BE2 		sub	sp, fp, #12
+ 2031 00a4 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2032 00a8 1EFF2FE1 		bx	lr
+ 2033              		.cfi_endproc
+ 2034              	.LFE4:
+ 2036              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 at24c04.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:1888   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:1891   .text:00000000 at24c04_clear
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:1918   .text:00000018 at24c04_bytewrite
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:1950   .text:00000044 at24c04_byteread
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:1981   .text:0000006c at24c04_load
+C:\Users\USUARI~1\AppData\Local\Temp\ccdTeJPh.s:2010   .text:0000008c at24c04_store
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

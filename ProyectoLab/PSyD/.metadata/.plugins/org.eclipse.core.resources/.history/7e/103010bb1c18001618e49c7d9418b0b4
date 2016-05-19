@@ -1,0 +1,234 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"iic.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/iic.c"
+ 1894              		.align	2
+ 1895              		.global	iic_init
+ 1897              	iic_init:
+ 1898              	.LFB0:
+   1:../src/iic.c  **** /*-------------------------------------------------------------------
+   2:../src/iic.c  **** **
+   3:../src/iic.c  **** **  Fichero:
+   4:../src/iic.c  **** **    iic.h  5/3/2015
+   5:../src/iic.c  **** **
+   6:../src/iic.c  **** **    (c) J.M. Mendias
+   7:../src/iic.c  **** **    Programación de Sistemas y Dispositivos
+   8:../src/iic.c  **** **    Facultad de Informática. Universidad Complutense de Madrid
+   9:../src/iic.c  **** **
+  10:../src/iic.c  **** **  Propósito:
+  11:../src/iic.c  **** **    Contiene las definiciones de los prototipos de funciones
+  12:../src/iic.c  **** **    para la comunicación por el bus IIC del chip S3C44BOX
+  13:../src/iic.c  **** **
+  14:../src/iic.c  **** **  Notas de diseño:
+  15:../src/iic.c  **** **
+  16:../src/iic.c  **** **-----------------------------------------------------------------*/
+  17:../src/iic.c  **** 
+  18:../src/iic.c  **** #include <iic.h>
+  19:../src/iic.c  **** #include <s3c44b0x.h>
+  20:../src/iic.c  **** #include <s3cev40.h>
+  21:../src/iic.c  **** 
+  22:../src/iic.c  **** /*
+  23:../src/iic.c  **** ** Configura el controlador de IIC según los siguientes parámetros
+  24:../src/iic.c  **** **   Interrupciones: habilitadas
+  25:../src/iic.c  **** **   Transmisión/recepción: activada
+  26:../src/iic.c  **** **   Frecuencia de comunicación: 250 KHz
+  27:../src/iic.c  **** **   Generación de ACK: automática
+  28:../src/iic.c  **** */
+  29:../src/iic.c  **** void iic_init( void ){
+ 1899              		.loc 1 29 0
+ 1900              		.cfi_startproc
+ 1901              		@ Function supports interworking.
+ 1902              		@ args = 0, pretend = 0, frame = 0
+ 1903              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1904 0000 0DC0A0E1 		mov	ip, sp
+ 1905              	.LCFI0:
+ 1906              		.cfi_def_cfa_register 12
+ 1907 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1908 0008 04B04CE2 		sub	fp, ip, #4
+ 1909              		.cfi_offset 14, -8
+ 1910              		.cfi_offset 13, -12
+ 1911              		.cfi_offset 11, -16
+ 1912              	.LCFI1:
+ 1913              		.cfi_def_cfa 11, 4
+  30:../src/iic.c  **** 
+  31:../src/iic.c  **** }
+ 1914              		.loc 1 31 0
+ 1915 000c 0CD04BE2 		sub	sp, fp, #12
+ 1916 0010 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1917 0014 1EFF2FE1 		bx	lr
+ 1918              		.cfi_endproc
+ 1919              	.LFE0:
+ 1921              		.align	2
+ 1922              		.global	iic_start
+ 1924              	iic_start:
+ 1925              	.LFB1:
+  32:../src/iic.c  **** 
+  33:../src/iic.c  **** /*
+  34:../src/iic.c  **** ** Inicia un flujo de transmición/recepción en la que el microcontrolador actúa como master:
+  35:../src/iic.c  **** **   Genenera la START condition
+  36:../src/iic.c  **** **   Envía la dirección del dispositivo esclavo
+  37:../src/iic.c  **** **   Espera la recepción de ACK
+  38:../src/iic.c  **** */
+  39:../src/iic.c  **** void iic_start( uint8 mode, uint8 byte ){
+ 1926              		.loc 1 39 0
+ 1927              		.cfi_startproc
+ 1928              		@ Function supports interworking.
+ 1929              		@ args = 0, pretend = 0, frame = 8
+ 1930              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1931 0018 0DC0A0E1 		mov	ip, sp
+ 1932              	.LCFI2:
+ 1933              		.cfi_def_cfa_register 12
+ 1934 001c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1935 0020 04B04CE2 		sub	fp, ip, #4
+ 1936              		.cfi_offset 14, -8
+ 1937              		.cfi_offset 13, -12
+ 1938              		.cfi_offset 11, -16
+ 1939              	.LCFI3:
+ 1940              		.cfi_def_cfa 11, 4
+ 1941 0024 08D04DE2 		sub	sp, sp, #8
+ 1942 0028 0020A0E1 		mov	r2, r0
+ 1943 002c 0130A0E1 		mov	r3, r1
+ 1944 0030 0D204BE5 		strb	r2, [fp, #-13]
+ 1945 0034 0E304BE5 		strb	r3, [fp, #-14]
+  40:../src/iic.c  **** 
+  41:../src/iic.c  **** }
+ 1946              		.loc 1 41 0
+ 1947 0038 0CD04BE2 		sub	sp, fp, #12
+ 1948 003c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1949 0040 1EFF2FE1 		bx	lr
+ 1950              		.cfi_endproc
+ 1951              	.LFE1:
+ 1953              		.align	2
+ 1954              		.global	iic_putByte
+ 1956              	iic_putByte:
+ 1957              	.LFB2:
+  42:../src/iic.c  **** 
+  43:../src/iic.c  **** /*
+  44:../src/iic.c  **** ** Actuando el microcontrolador como master:
+  45:../src/iic.c  **** **   Envía el byte indicado
+  46:../src/iic.c  **** **   Espera la recepción de ACK
+  47:../src/iic.c  **** */
+  48:../src/iic.c  **** void iic_putByte( uint8 byte ){
+ 1958              		.loc 1 48 0
+ 1959              		.cfi_startproc
+ 1960              		@ Function supports interworking.
+ 1961              		@ args = 0, pretend = 0, frame = 8
+ 1962              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1963 0044 0DC0A0E1 		mov	ip, sp
+ 1964              	.LCFI4:
+ 1965              		.cfi_def_cfa_register 12
+ 1966 0048 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1967 004c 04B04CE2 		sub	fp, ip, #4
+ 1968              		.cfi_offset 14, -8
+ 1969              		.cfi_offset 13, -12
+ 1970              		.cfi_offset 11, -16
+ 1971              	.LCFI5:
+ 1972              		.cfi_def_cfa 11, 4
+ 1973 0050 08D04DE2 		sub	sp, sp, #8
+ 1974 0054 0030A0E1 		mov	r3, r0
+ 1975 0058 0D304BE5 		strb	r3, [fp, #-13]
+  49:../src/iic.c  **** 
+  50:../src/iic.c  **** }
+ 1976              		.loc 1 50 0
+ 1977 005c 0CD04BE2 		sub	sp, fp, #12
+ 1978 0060 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1979 0064 1EFF2FE1 		bx	lr
+ 1980              		.cfi_endproc
+ 1981              	.LFE2:
+ 1983              		.align	2
+ 1984              		.global	iic_getByte
+ 1986              	iic_getByte:
+ 1987              	.LFB3:
+  51:../src/iic.c  **** 
+  52:../src/iic.c  **** /*
+  53:../src/iic.c  **** ** Actuando el microcontrolador como master:
+  54:../src/iic.c  **** **   Espera la recepción de un byte
+  55:../src/iic.c  **** **   Genera o no ACK
+  56:../src/iic.c  **** **   Devuelve el byte recibido
+  57:../src/iic.c  **** */
+  58:../src/iic.c  **** uint8 iic_getByte( uint8 ack ){
+ 1988              		.loc 1 58 0
+ 1989              		.cfi_startproc
+ 1990              		@ Function supports interworking.
+ 1991              		@ args = 0, pretend = 0, frame = 8
+ 1992              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1993 0068 0DC0A0E1 		mov	ip, sp
+ 1994              	.LCFI6:
+ 1995              		.cfi_def_cfa_register 12
+ 1996 006c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1997 0070 04B04CE2 		sub	fp, ip, #4
+ 1998              		.cfi_offset 14, -8
+ 1999              		.cfi_offset 13, -12
+ 2000              		.cfi_offset 11, -16
+ 2001              	.LCFI7:
+ 2002              		.cfi_def_cfa 11, 4
+ 2003 0074 08D04DE2 		sub	sp, sp, #8
+ 2004 0078 0030A0E1 		mov	r3, r0
+ 2005 007c 0D304BE5 		strb	r3, [fp, #-13]
+  59:../src/iic.c  **** 	return 0;
+ 2006              		.loc 1 59 0
+ 2007 0080 0030A0E3 		mov	r3, #0
+  60:../src/iic.c  **** }
+ 2008              		.loc 1 60 0
+ 2009 0084 0300A0E1 		mov	r0, r3
+ 2010 0088 0CD04BE2 		sub	sp, fp, #12
+ 2011 008c 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2012 0090 1EFF2FE1 		bx	lr
+ 2013              		.cfi_endproc
+ 2014              	.LFE3:
+ 2016              		.align	2
+ 2017              		.global	iic_stop
+ 2019              	iic_stop:
+ 2020              	.LFB4:
+  61:../src/iic.c  **** 
+  62:../src/iic.c  **** /*
+  63:../src/iic.c  **** ** Envía la stop condition y espera los ms indicados para que haga efecto
+  64:../src/iic.c  **** */
+  65:../src/iic.c  **** void iic_stop( uint16 ms ){
+ 2021              		.loc 1 65 0
+ 2022              		.cfi_startproc
+ 2023              		@ Function supports interworking.
+ 2024              		@ args = 0, pretend = 0, frame = 8
+ 2025              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2026 0094 0DC0A0E1 		mov	ip, sp
+ 2027              	.LCFI8:
+ 2028              		.cfi_def_cfa_register 12
+ 2029 0098 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2030 009c 04B04CE2 		sub	fp, ip, #4
+ 2031              		.cfi_offset 14, -8
+ 2032              		.cfi_offset 13, -12
+ 2033              		.cfi_offset 11, -16
+ 2034              	.LCFI9:
+ 2035              		.cfi_def_cfa 11, 4
+ 2036 00a0 08D04DE2 		sub	sp, sp, #8
+ 2037 00a4 0030A0E1 		mov	r3, r0
+ 2038 00a8 BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+  66:../src/iic.c  **** 
+  67:../src/iic.c  **** }
+ 2039              		.loc 1 67 0
+ 2040 00ac 0CD04BE2 		sub	sp, fp, #12
+ 2041 00b0 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2042 00b4 1EFF2FE1 		bx	lr
+ 2043              		.cfi_endproc
+ 2044              	.LFE4:
+ 2046              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 iic.c
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:1894   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:1897   .text:00000000 iic_init
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:1924   .text:00000018 iic_start
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:1956   .text:00000044 iic_putByte
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:1986   .text:00000068 iic_getByte
+C:\Users\USUARI~1\AppData\Local\Temp\cctlAeMs.s:2019   .text:00000094 iic_stop
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

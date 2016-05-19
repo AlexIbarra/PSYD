@@ -10,7 +10,7 @@
 #include <s3cev40.h>
 
 /*
-** Configura la UART para una comunicación según los siguientes parámetros:
+** Configura la UART para una comunicaciï¿½n segï¿½n los siguientes parï¿½metros:
 **   E/S programada (por pooling)
 **   Control manual de flujo
 **   FIFOs: activadas
@@ -30,7 +30,7 @@ void uart0_init( void ){
 }
 
 /*
-** Envía un caracter por la UART
+** Envï¿½a un caracter por la UART
 */
 void uart0_putchar( char ch ){
 	while(((UFSTAT0 >> 9) & 1) == 1);
@@ -38,7 +38,7 @@ void uart0_putchar( char ch ){
 }
 
 /*
-** Envía una cadena de caracteres por la UART
+** Envï¿½a una cadena de caracteres por la UART
 */
 void uart0_puts( char *s ){
 	int i=0;
@@ -49,10 +49,10 @@ void uart0_puts( char *s ){
 }
 
 /*
-** Envía una cadena de caracteres por la UART que representa en decimal al entero que toma como argumento
+** Envï¿½a una cadena de caracteres por la UART que representa en decimal al entero que toma como argumento
 */
 void uart0_putint( int32 i ){
-	int32 num=i, dig=0, tam=0, numero[11], j=0;
+	int32 num=i, tam=0, numero[11], j=0;
 
 	if(num<0){
 		uart0_putchar('-');
@@ -75,7 +75,7 @@ void uart0_putint( int32 i ){
 }
 
 /*
-** Envía una cadena de caracteres por la UART que representa en hexadecimal al entero que toma como argumento
+** Envï¿½a una cadena de caracteres por la UART que representa en hexadecimal al entero que toma como argumento
 */
 void uart0_puthex( uint32 i ){
 	char buf[8 + 1]; //Los caracteres se generan comenzando por el menos significativo
@@ -83,14 +83,14 @@ void uart0_puthex( uint32 i ){
 	uint8 c; // Almacena fin de cadena
 	*p = '\0';
 	do {
-		c = i & 0xf; // Resto de la división por 16
+		c = i & 0xf; // Resto de la divisiï¿½n por 16
 		if( c < 10 )
-			*--p = '0' + c; // Almacenaje del carácter
+			*--p = '0' + c; // Almacenaje del carï¿½cter
 		else
 			*--p = 'a' + c - 10;
-			i = i >> 4; // División por 16
+			i = i >> 4; // Divisiï¿½n por 16
 	} while( i );
-	uart0_puts( p ); // Envía la cadena
+	uart0_puts( p ); // Envï¿½a la cadena
 }
 
 /*
@@ -102,7 +102,7 @@ char uart0_getchar( void ){
 }
 
 /*
-** Forma una cadena con los caracteres recibidos por la UART hasta la recepción de '\n'
+** Forma una cadena con los caracteres recibidos por la UART hasta la recepciï¿½n de '\n'
 */
 void uart0_gets( char *s ){
 	uint8 i=0;
@@ -115,7 +115,7 @@ void uart0_gets( char *s ){
 }
 
 /*
-** Forma una cadena con los caracteres recibidos por la UART hasta la recepción de '\n' y los interpreta en decimal
+** Forma una cadena con los caracteres recibidos por la UART hasta la recepciï¿½n de '\n' y los interpreta en decimal
 */
 int32 uart0_getint( void ){
 	int32 num=0, signo=1;
@@ -135,7 +135,7 @@ int32 uart0_getint( void ){
 }
 
 /*
-** Forma una cadena con los caracteres recibidos por la UART hasta la recepción de '\n' y los interpreta en hexadecimal
+** Forma una cadena con los caracteres recibidos por la UART hasta la recepciï¿½n de '\n' y los interpreta en hexadecimal
 */
 uint32 uart0_gethex( void ){
 	int32 num=0;

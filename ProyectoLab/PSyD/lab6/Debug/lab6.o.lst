@@ -1,0 +1,596 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"lab6.c"
+  21              	.Ltext0:
+  22              		.file 1 "../lab6.c"
+ 2059              		.align	2
+ 2060              	.LC0:
+ 2061 0000 0A446574 		.ascii	"\012Detecci\363n de presi\363n:\012\000"
+ 2061      65636369 
+ 2061      F36E2064 
+ 2061      65207072 
+ 2061      657369F3 
+ 2062              		.align	2
+ 2063              	.LC1:
+ 2064 0018 20202D20 		.ascii	"  - Pulse el boton izquierdo\012\000"
+ 2064      50756C73 
+ 2064      6520656C 
+ 2064      20626F74 
+ 2064      6F6E2069 
+ 2065 0036 0000     		.align	2
+ 2066              	.LC2:
+ 2067 0038 20202D20 		.ascii	"  - Pulse el boton derecho\012\000"
+ 2067      50756C73 
+ 2067      6520656C 
+ 2067      20626F74 
+ 2067      6F6E2064 
+ 2068              		.align	2
+ 2069              	.LC3:
+ 2070 0054 20202D20 		.ascii	"  - Pulse alguna tecla\012\000"
+ 2070      50756C73 
+ 2070      6520616C 
+ 2070      67756E61 
+ 2070      20746563 
+ 2071              		.align	2
+ 2072              	.LC4:
+ 2073 006c 20202D20 		.ascii	"  - Pulse la tecla 7 \012\000"
+ 2073      50756C73 
+ 2073      65206C61 
+ 2073      20746563 
+ 2073      6C612037 
+ 2074 0083 00       		.align	2
+ 2075              	.LC5:
+ 2076 0084 0A446574 		.ascii	"\012Detecci\363n de depresi\363n:\012\000"
+ 2076      65636369 
+ 2076      F36E2064 
+ 2076      65206465 
+ 2076      70726573 
+ 2077 009e 0000     		.align	2
+ 2078              	.LC6:
+ 2079 00a0 0A50756C 		.ascii	"\012Pulse botones y/o teclas del keypad:\012\000"
+ 2079      73652062 
+ 2079      6F746F6E 
+ 2079      65732079 
+ 2079      2F6F2074 
+ 2080              		.text
+ 2081              		.align	2
+ 2082              		.global	main
+ 2084              	main:
+ 2085              	.LFB0:
+   1:../lab6.c     **** /*-------------------------------------------------------------------
+   2:../lab6.c     **** **
+   3:../lab6.c     **** **  Fichero:
+   4:../lab6.c     **** **    lab6.c  26/4/2013
+   5:../lab6.c     **** **
+   6:../lab6.c     **** **    (c) J.M. Mendias
+   7:../lab6.c     **** **    Programación de Sistemas y Dispositivos
+   8:../lab6.c     **** **    Facultad de Informática. Universidad Complutense de Madrid
+   9:../lab6.c     **** **
+  10:../lab6.c     **** **  Propósito:
+  11:../lab6.c     **** **    Test del laboratorio 6
+  12:../lab6.c     **** **
+  13:../lab6.c     **** **  Notas de diseño:
+  14:../lab6.c     **** **
+  15:../lab6.c     **** **-----------------------------------------------------------------*/
+  16:../lab6.c     **** 
+  17:../lab6.c     **** #include <s3c44b0x.h>
+  18:../lab6.c     **** #include <s3cev40.h>
+  19:../lab6.c     **** #include <common_types.h>
+  20:../lab6.c     **** #include <uart.h>
+  21:../lab6.c     **** #include <system.h>
+  22:../lab6.c     **** #include <keypad.h>
+  23:../lab6.c     **** #include <pbs.h>
+  24:../lab6.c     **** 
+  25:../lab6.c     **** void isr_keypad( void ) __attribute__ ((interrupt ("IRQ")));
+  26:../lab6.c     **** void isr_pb( void ) __attribute__ ((interrupt ("IRQ")));
+  27:../lab6.c     **** 
+  28:../lab6.c     **** void main( void )
+  29:../lab6.c     **** {
+ 2086              		.loc 1 29 0
+ 2087              		.cfi_startproc
+ 2088              		@ Function supports interworking.
+ 2089              		@ args = 0, pretend = 0, frame = 0
+ 2090              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2091 0000 0DC0A0E1 		mov	ip, sp
+ 2092              	.LCFI0:
+ 2093              		.cfi_def_cfa_register 12
+ 2094 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2095 0008 04B04CE2 		sub	fp, ip, #4
+ 2096              		.cfi_offset 14, -8
+ 2097              		.cfi_offset 13, -12
+ 2098              		.cfi_offset 11, -16
+ 2099              	.LCFI1:
+ 2100              		.cfi_def_cfa 11, 4
+  30:../lab6.c     **** 
+  31:../lab6.c     **** 	sys_init();
+ 2101              		.loc 1 31 0
+ 2102 000c FEFFFFEB 		bl	sys_init
+  32:../lab6.c     **** 	uart0_init();
+ 2103              		.loc 1 32 0
+ 2104 0010 FEFFFFEB 		bl	uart0_init
+  33:../lab6.c     **** 	keypad_init();
+ 2105              		.loc 1 33 0
+ 2106 0014 FEFFFFEB 		bl	keypad_init
+  34:../lab6.c     **** 	pbs_init();
+ 2107              		.loc 1 34 0
+ 2108 0018 FEFFFFEB 		bl	pbs_init
+  35:../lab6.c     **** 
+  36:../lab6.c     **** 	/************************************/
+  37:../lab6.c     **** 
+  38:../lab6.c     **** 	uart0_puts( "\nDetección de presión:\n" );
+ 2109              		.loc 1 38 0
+ 2110 001c 9C009FE5 		ldr	r0, .L3
+ 2111 0020 FEFFFFEB 		bl	uart0_puts
+  39:../lab6.c     **** 
+  40:../lab6.c     **** 	uart0_puts( "  - Pulse el boton izquierdo\n" );
+ 2112              		.loc 1 40 0
+ 2113 0024 98009FE5 		ldr	r0, .L3+4
+ 2114 0028 FEFFFFEB 		bl	uart0_puts
+  41:../lab6.c     **** 	pb_wait_keydown( PB_LEFT );
+ 2115              		.loc 1 41 0
+ 2116 002c 4000A0E3 		mov	r0, #64
+ 2117 0030 FEFFFFEB 		bl	pb_wait_keydown
+  42:../lab6.c     **** 
+  43:../lab6.c     **** 	uart0_puts( "  - Pulse el boton derecho\n" );
+ 2118              		.loc 1 43 0
+ 2119 0034 8C009FE5 		ldr	r0, .L3+8
+ 2120 0038 FEFFFFEB 		bl	uart0_puts
+  44:../lab6.c     **** 	pb_wait_keydown( PB_RIGHT );
+ 2121              		.loc 1 44 0
+ 2122 003c 8000A0E3 		mov	r0, #128
+ 2123 0040 FEFFFFEB 		bl	pb_wait_keydown
+  45:../lab6.c     **** 
+  46:../lab6.c     **** 	uart0_puts( "  - Pulse alguna tecla\n" );
+ 2124              		.loc 1 46 0
+ 2125 0044 80009FE5 		ldr	r0, .L3+12
+ 2126 0048 FEFFFFEB 		bl	uart0_puts
+  47:../lab6.c     **** 	keypad_wait_any_keydown( );
+ 2127              		.loc 1 47 0
+ 2128 004c FEFFFFEB 		bl	keypad_wait_any_keydown
+  48:../lab6.c     **** 
+  49:../lab6.c     **** 	uart0_puts( "  - Pulse la tecla 7 \n" );
+ 2129              		.loc 1 49 0
+ 2130 0050 78009FE5 		ldr	r0, .L3+16
+ 2131 0054 FEFFFFEB 		bl	uart0_puts
+  50:../lab6.c     **** 	keypad_wait_keydown( KEYPAD_KEY7 );
+ 2132              		.loc 1 50 0
+ 2133 0058 0700A0E3 		mov	r0, #7
+ 2134 005c FEFFFFEB 		bl	keypad_wait_keydown
+  51:../lab6.c     **** 
+  52:../lab6.c     ****     /************************************/
+  53:../lab6.c     **** 
+  54:../lab6.c     **** 	uart0_puts( "\nDetección de depresión:\n" );
+ 2135              		.loc 1 54 0
+ 2136 0060 6C009FE5 		ldr	r0, .L3+20
+ 2137 0064 FEFFFFEB 		bl	uart0_puts
+  55:../lab6.c     **** 
+  56:../lab6.c     **** 	uart0_puts( "  - Pulse el boton izquierdo\n" );
+ 2138              		.loc 1 56 0
+ 2139 0068 54009FE5 		ldr	r0, .L3+4
+ 2140 006c FEFFFFEB 		bl	uart0_puts
+  57:../lab6.c     **** 	pb_wait_keyup( PB_LEFT );
+ 2141              		.loc 1 57 0
+ 2142 0070 4000A0E3 		mov	r0, #64
+ 2143 0074 FEFFFFEB 		bl	pb_wait_keyup
+  58:../lab6.c     **** 
+  59:../lab6.c     **** 	uart0_puts( "  - Pulse el boton derecho\n" );
+ 2144              		.loc 1 59 0
+ 2145 0078 48009FE5 		ldr	r0, .L3+8
+ 2146 007c FEFFFFEB 		bl	uart0_puts
+  60:../lab6.c     **** 	pb_wait_keyup( PB_RIGHT );
+ 2147              		.loc 1 60 0
+ 2148 0080 8000A0E3 		mov	r0, #128
+ 2149 0084 FEFFFFEB 		bl	pb_wait_keyup
+  61:../lab6.c     **** 
+  62:../lab6.c     **** 	uart0_puts( "  - Pulse alguna tecla\n" );
+ 2150              		.loc 1 62 0
+ 2151 0088 3C009FE5 		ldr	r0, .L3+12
+ 2152 008c FEFFFFEB 		bl	uart0_puts
+  63:../lab6.c     **** 	keypad_wait_any_keyup( );
+ 2153              		.loc 1 63 0
+ 2154 0090 FEFFFFEB 		bl	keypad_wait_any_keyup
+  64:../lab6.c     **** 
+  65:../lab6.c     **** 	uart0_puts( "  - Pulse la tecla 7 \n" );
+ 2155              		.loc 1 65 0
+ 2156 0094 34009FE5 		ldr	r0, .L3+16
+ 2157 0098 FEFFFFEB 		bl	uart0_puts
+  66:../lab6.c     **** 	keypad_wait_keyup( KEYPAD_KEY7 );
+ 2158              		.loc 1 66 0
+ 2159 009c 0700A0E3 		mov	r0, #7
+ 2160 00a0 FEFFFFEB 		bl	keypad_wait_keyup
+  67:../lab6.c     **** 
+  68:../lab6.c     ****     /************************************/
+  69:../lab6.c     **** 
+  70:../lab6.c     **** 	uart0_puts( "\nPulse botones y/o teclas del keypad:\n" );
+ 2161              		.loc 1 70 0
+ 2162 00a4 2C009FE5 		ldr	r0, .L3+24
+ 2163 00a8 FEFFFFEB 		bl	uart0_puts
+  71:../lab6.c     **** 	keypad_open( isr_keypad );
+ 2164              		.loc 1 71 0
+ 2165 00ac 28009FE5 		ldr	r0, .L3+28
+ 2166 00b0 FEFFFFEB 		bl	keypad_open
+  72:../lab6.c     **** 	pbs_open( isr_pb );
+ 2167              		.loc 1 72 0
+ 2168 00b4 24009FE5 		ldr	r0, .L3+32
+ 2169 00b8 FEFFFFEB 		bl	pbs_open
+ 2170              	.L2:
+  73:../lab6.c     **** 
+  74:../lab6.c     ****     /************************************/
+  75:../lab6.c     **** 
+  76:../lab6.c     **** 	while( 1 );
+ 2171              		.loc 1 76 0 discriminator 1
+ 2172 00bc FEFFFFEA 		b	.L2
+ 2173              	.L4:
+ 2174              		.align	2
+ 2175              	.L3:
+ 2176 00c0 00000000 		.word	.LC0
+ 2177 00c4 18000000 		.word	.LC1
+ 2178 00c8 38000000 		.word	.LC2
+ 2179 00cc 54000000 		.word	.LC3
+ 2180 00d0 6C000000 		.word	.LC4
+ 2181 00d4 84000000 		.word	.LC5
+ 2182 00d8 A0000000 		.word	.LC6
+ 2183 00dc 00000000 		.word	isr_keypad
+ 2184 00e0 00000000 		.word	isr_pb
+ 2185              		.cfi_endproc
+ 2186              	.LFE0:
+ 2188              		.section	.rodata
+ 2189 00c7 00       		.align	2
+ 2190              	.LC7:
+ 2191 00c8 20202D20 		.ascii	"  - KEYPAD TIMEOUT\012\000"
+ 2191      4B455950 
+ 2191      41442054 
+ 2191      494D454F 
+ 2191      55540A00 
+ 2192              		.align	2
+ 2193              	.LC8:
+ 2194 00dc 20202D20 		.ascii	"  - KEYPAD FAILURE\012\000"
+ 2194      4B455950 
+ 2194      41442046 
+ 2194      41494C55 
+ 2194      52450A00 
+ 2195              		.align	2
+ 2196              	.LC9:
+ 2197 00f0 20202D20 		.ascii	"  - Tecla pulsada: 0x\000"
+ 2197      5465636C 
+ 2197      61207075 
+ 2197      6C736164 
+ 2197      613A2030 
+ 2198 0106 0000     		.align	2
+ 2199              	.LC10:
+ 2200 0108 20647572 		.ascii	" durante \000"
+ 2200      616E7465 
+ 2200      2000
+ 2201 0112 0000     		.align	2
+ 2202              	.LC11:
+ 2203 0114 206D7320 		.ascii	" ms \012\000"
+ 2203      0A00
+ 2204              		.text
+ 2205              		.align	2
+ 2206              		.global	isr_keypad
+ 2208              	isr_keypad:
+ 2209              	.LFB1:
+  77:../lab6.c     **** 
+  78:../lab6.c     **** }
+  79:../lab6.c     **** 
+  80:../lab6.c     **** void isr_keypad( void )
+  81:../lab6.c     **** {
+ 2210              		.loc 1 81 0
+ 2211              		.cfi_startproc
+ 2212              		@ Interrupt Service Routine.
+ 2213              		@ args = 0, pretend = 0, frame = 8
+ 2214              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2215 00e4 04C02DE5 		str	ip, [sp, #-4]!
+ 2216 00e8 0DC0A0E1 		mov	ip, sp
+ 2217              	.LCFI2:
+ 2218              		.cfi_def_cfa_register 12
+ 2219 00ec 0FD82DE9 		stmfd	sp!, {r0, r1, r2, r3, fp, ip, lr, pc}
+ 2220 00f0 04B04CE2 		sub	fp, ip, #4
+ 2221              		.cfi_offset 14, -8
+ 2222              		.cfi_offset 13, -12
+ 2223              		.cfi_offset 11, -16
+ 2224              		.cfi_offset 3, -20
+ 2225              		.cfi_offset 2, -24
+ 2226              		.cfi_offset 1, -28
+ 2227              		.cfi_offset 0, -32
+ 2228              	.LCFI3:
+ 2229              		.cfi_def_cfa 11, 4
+ 2230 00f4 08D04DE2 		sub	sp, sp, #8
+  82:../lab6.c     **** 	uint8 scancode;
+  83:../lab6.c     **** 	uint16 time;
+  84:../lab6.c     **** 
+  85:../lab6.c     **** 	scancode = keypad_getchartime( &time );
+ 2231              		.loc 1 85 0
+ 2232 00f8 20304BE2 		sub	r3, fp, #32
+ 2233 00fc 0300A0E1 		mov	r0, r3
+ 2234 0100 FEFFFFEB 		bl	keypad_getchartime
+ 2235 0104 0030A0E1 		mov	r3, r0
+ 2236 0108 1D304BE5 		strb	r3, [fp, #-29]
+  86:../lab6.c     **** 	switch( scancode )
+ 2237              		.loc 1 86 0
+ 2238 010c 1D305BE5 		ldrb	r3, [fp, #-29]	@ zero_extendqisi2
+ 2239 0110 FE0053E3 		cmp	r3, #254
+ 2240 0114 0200000A 		beq	.L7
+ 2241 0118 FF0053E3 		cmp	r3, #255
+ 2242 011c 0300000A 		beq	.L8
+ 2243 0120 050000EA 		b	.L10
+ 2244              	.L7:
+  87:../lab6.c     **** 	{
+  88:../lab6.c     **** 		case KEYPAD_TIMEOUT:
+  89:../lab6.c     **** 			uart0_puts( "  - KEYPAD TIMEOUT\n" );
+ 2245              		.loc 1 89 0
+ 2246 0124 5C009FE5 		ldr	r0, .L11
+ 2247 0128 FEFFFFEB 		bl	uart0_puts
+  90:../lab6.c     **** 			break;
+ 2248              		.loc 1 90 0
+ 2249 012c 0E0000EA 		b	.L9
+ 2250              	.L8:
+  91:../lab6.c     **** 		case KEYPAD_FAILURE:
+  92:../lab6.c     **** 			uart0_puts( "  - KEYPAD FAILURE\n" );
+ 2251              		.loc 1 92 0
+ 2252 0130 54009FE5 		ldr	r0, .L11+4
+ 2253 0134 FEFFFFEB 		bl	uart0_puts
+  93:../lab6.c     **** 			break;			
+ 2254              		.loc 1 93 0
+ 2255 0138 0B0000EA 		b	.L9
+ 2256              	.L10:
+  94:../lab6.c     **** 		default:
+  95:../lab6.c     **** 			uart0_puts( "  - Tecla pulsada: 0x" );
+ 2257              		.loc 1 95 0
+ 2258 013c 4C009FE5 		ldr	r0, .L11+8
+ 2259 0140 FEFFFFEB 		bl	uart0_puts
+  96:../lab6.c     **** 			uart0_puthex( scancode );
+ 2260              		.loc 1 96 0
+ 2261 0144 1D305BE5 		ldrb	r3, [fp, #-29]	@ zero_extendqisi2
+ 2262 0148 0300A0E1 		mov	r0, r3
+ 2263 014c FEFFFFEB 		bl	uart0_puthex
+  97:../lab6.c     **** 			uart0_puts( " durante " );
+ 2264              		.loc 1 97 0
+ 2265 0150 3C009FE5 		ldr	r0, .L11+12
+ 2266 0154 FEFFFFEB 		bl	uart0_puts
+  98:../lab6.c     **** 			uart0_putint( time );
+ 2267              		.loc 1 98 0
+ 2268 0158 B0325BE1 		ldrh	r3, [fp, #-32]
+ 2269 015c 0300A0E1 		mov	r0, r3
+ 2270 0160 FEFFFFEB 		bl	uart0_putint
+  99:../lab6.c     **** 			uart0_puts( " ms \n" );
+ 2271              		.loc 1 99 0
+ 2272 0164 2C009FE5 		ldr	r0, .L11+16
+ 2273 0168 FEFFFFEB 		bl	uart0_puts
+ 2274              	.L9:
+ 100:../lab6.c     **** 	}
+ 101:../lab6.c     ****     I_ISPC = BIT_KEYPAD;
+ 2275              		.loc 1 101 0
+ 2276 016c 28309FE5 		ldr	r3, .L11+20
+ 2277 0170 0124A0E3 		mov	r2, #16777216
+ 2278 0174 002083E5 		str	r2, [r3, #0]
+ 102:../lab6.c     **** }
+ 2279              		.loc 1 102 0
+ 2280 0178 1CD04BE2 		sub	sp, fp, #28
+ 2281 017c 0F689DE8 		ldmfd	sp, {r0, r1, r2, r3, fp, sp, lr}
+ 2282 0180 04C09DE4 		ldmfd	sp!, {ip}
+ 2283 0184 04F05EE2 		subs	pc, lr, #4
+ 2284              	.L12:
+ 2285              		.align	2
+ 2286              	.L11:
+ 2287 0188 C8000000 		.word	.LC7
+ 2288 018c DC000000 		.word	.LC8
+ 2289 0190 F0000000 		.word	.LC9
+ 2290 0194 08010000 		.word	.LC10
+ 2291 0198 14010000 		.word	.LC11
+ 2292 019c 2400E001 		.word	31457316
+ 2293              		.cfi_endproc
+ 2294              	.LFE1:
+ 2296              		.section	.rodata
+ 2297 011a 0000     		.align	2
+ 2298              	.LC12:
+ 2299 011c 20202D20 		.ascii	"  - PB TIMEOUT\012\000"
+ 2299      50422054 
+ 2299      494D454F 
+ 2299      55540A00 
+ 2300              		.align	2
+ 2301              	.LC13:
+ 2302 012c 20202D20 		.ascii	"  - PB FAILURE\012\000"
+ 2302      50422046 
+ 2302      41494C55 
+ 2302      52450A00 
+ 2303              		.align	2
+ 2304              	.LC14:
+ 2305 013c 20202D20 		.ascii	"  - Boton izquierdo pulsado durante \000"
+ 2305      426F746F 
+ 2305      6E20697A 
+ 2305      71756965 
+ 2305      72646F20 
+ 2306 0161 000000   		.align	2
+ 2307              	.LC15:
+ 2308 0164 20202D20 		.ascii	"  - Boton derecho pulsado durante \000"
+ 2308      426F746F 
+ 2308      6E206465 
+ 2308      72656368 
+ 2308      6F207075 
+ 2309 0187 00       		.text
+ 2310              		.align	2
+ 2311              		.global	isr_pb
+ 2313              	isr_pb:
+ 2314              	.LFB2:
+ 103:../lab6.c     **** 
+ 104:../lab6.c     **** void isr_pb( void )
+ 105:../lab6.c     **** {
+ 2315              		.loc 1 105 0
+ 2316              		.cfi_startproc
+ 2317              		@ Interrupt Service Routine.
+ 2318              		@ args = 0, pretend = 0, frame = 8
+ 2319              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2320 01a0 04C02DE5 		str	ip, [sp, #-4]!
+ 2321 01a4 0DC0A0E1 		mov	ip, sp
+ 2322              	.LCFI4:
+ 2323              		.cfi_def_cfa_register 12
+ 2324 01a8 0FD82DE9 		stmfd	sp!, {r0, r1, r2, r3, fp, ip, lr, pc}
+ 2325 01ac 04B04CE2 		sub	fp, ip, #4
+ 2326              		.cfi_offset 14, -8
+ 2327              		.cfi_offset 13, -12
+ 2328              		.cfi_offset 11, -16
+ 2329              		.cfi_offset 3, -20
+ 2330              		.cfi_offset 2, -24
+ 2331              		.cfi_offset 1, -28
+ 2332              		.cfi_offset 0, -32
+ 2333              	.LCFI5:
+ 2334              		.cfi_def_cfa 11, 4
+ 2335 01b0 08D04DE2 		sub	sp, sp, #8
+ 106:../lab6.c     **** 	uint8 scancode;
+ 107:../lab6.c     **** 	uint16 time;
+ 108:../lab6.c     **** 
+ 109:../lab6.c     **** 	scancode = pb_getchartime( &time );
+ 2336              		.loc 1 109 0
+ 2337 01b4 20304BE2 		sub	r3, fp, #32
+ 2338 01b8 0300A0E1 		mov	r0, r3
+ 2339 01bc FEFFFFEB 		bl	pb_getchartime
+ 2340 01c0 0030A0E1 		mov	r3, r0
+ 2341 01c4 1D304BE5 		strb	r3, [fp, #-29]
+ 110:../lab6.c     **** 	switch( scancode )
+ 2342              		.loc 1 110 0
+ 2343 01c8 1D305BE5 		ldrb	r3, [fp, #-29]	@ zero_extendqisi2
+ 2344 01cc 800053E3 		cmp	r3, #128
+ 2345 01d0 1A00000A 		beq	.L16
+ 2346 01d4 800053E3 		cmp	r3, #128
+ 2347 01d8 020000CA 		bgt	.L19
+ 2348 01dc 400053E3 		cmp	r3, #64
+ 2349 01e0 0B00000A 		beq	.L15
+ 2350 01e4 200000EA 		b	.L14
+ 2351              	.L19:
+ 2352 01e8 FE0053E3 		cmp	r3, #254
+ 2353 01ec 0200000A 		beq	.L17
+ 2354 01f0 FF0053E3 		cmp	r3, #255
+ 2355 01f4 0300000A 		beq	.L18
+ 2356 01f8 1B0000EA 		b	.L14
+ 2357              	.L17:
+ 111:../lab6.c     **** 	{
+ 112:../lab6.c     **** 		case PB_TIMEOUT:
+ 113:../lab6.c     **** 			uart0_puts( "  - PB TIMEOUT\n" );
+ 2358              		.loc 1 113 0
+ 2359 01fc 84009FE5 		ldr	r0, .L20
+ 2360 0200 FEFFFFEB 		bl	uart0_puts
+ 114:../lab6.c     **** 			break;
+ 2361              		.loc 1 114 0
+ 2362 0204 180000EA 		b	.L14
+ 2363              	.L18:
+ 115:../lab6.c     **** 		case PB_FAILURE:
+ 116:../lab6.c     **** 			uart0_puts( "  - PB FAILURE\n" );
+ 2364              		.loc 1 116 0
+ 2365 0208 7C009FE5 		ldr	r0, .L20+4
+ 2366 020c FEFFFFEB 		bl	uart0_puts
+ 117:../lab6.c     **** 			break;
+ 2367              		.loc 1 117 0
+ 2368 0210 150000EA 		b	.L14
+ 2369              	.L15:
+ 118:../lab6.c     **** 		case PB_LEFT:
+ 119:../lab6.c     **** 			uart0_puts( "  - Boton izquierdo pulsado durante " );
+ 2370              		.loc 1 119 0
+ 2371 0214 74009FE5 		ldr	r0, .L20+8
+ 2372 0218 FEFFFFEB 		bl	uart0_puts
+ 120:../lab6.c     **** 			uart0_putint( time );
+ 2373              		.loc 1 120 0
+ 2374 021c B0325BE1 		ldrh	r3, [fp, #-32]
+ 2375 0220 0300A0E1 		mov	r0, r3
+ 2376 0224 FEFFFFEB 		bl	uart0_putint
+ 121:../lab6.c     **** 			uart0_puts( " ms \n" );
+ 2377              		.loc 1 121 0
+ 2378 0228 64009FE5 		ldr	r0, .L20+12
+ 2379 022c FEFFFFEB 		bl	uart0_puts
+ 122:../lab6.c     **** 			EXTINTPND = BIT_LEFTPB;
+ 2380              		.loc 1 122 0
+ 2381 0230 60309FE5 		ldr	r3, .L20+16
+ 2382 0234 0420A0E3 		mov	r2, #4
+ 2383 0238 002083E5 		str	r2, [r3, #0]
+ 123:../lab6.c     **** 			break;
+ 2384              		.loc 1 123 0
+ 2385 023c 0A0000EA 		b	.L14
+ 2386              	.L16:
+ 124:../lab6.c     **** 		case PB_RIGHT:
+ 125:../lab6.c     **** 			uart0_puts( "  - Boton derecho pulsado durante " );
+ 2387              		.loc 1 125 0
+ 2388 0240 54009FE5 		ldr	r0, .L20+20
+ 2389 0244 FEFFFFEB 		bl	uart0_puts
+ 126:../lab6.c     **** 			uart0_putint( time );
+ 2390              		.loc 1 126 0
+ 2391 0248 B0325BE1 		ldrh	r3, [fp, #-32]
+ 2392 024c 0300A0E1 		mov	r0, r3
+ 2393 0250 FEFFFFEB 		bl	uart0_putint
+ 127:../lab6.c     **** 			uart0_puts( " ms \n" );
+ 2394              		.loc 1 127 0
+ 2395 0254 38009FE5 		ldr	r0, .L20+12
+ 2396 0258 FEFFFFEB 		bl	uart0_puts
+ 128:../lab6.c     **** 			EXTINTPND = BIT_RIGHTPB;
+ 2397              		.loc 1 128 0
+ 2398 025c 34309FE5 		ldr	r3, .L20+16
+ 2399 0260 0820A0E3 		mov	r2, #8
+ 2400 0264 002083E5 		str	r2, [r3, #0]
+ 129:../lab6.c     **** 			break;
+ 2401              		.loc 1 129 0
+ 2402 0268 0000A0E1 		mov	r0, r0	@ nop
+ 2403              	.L14:
+ 130:../lab6.c     **** 	}
+ 131:../lab6.c     ****     I_ISPC = BIT_PB;
+ 2404              		.loc 1 131 0
+ 2405 026c 2C309FE5 		ldr	r3, .L20+24
+ 2406 0270 0226A0E3 		mov	r2, #2097152
+ 2407 0274 002083E5 		str	r2, [r3, #0]
+ 132:../lab6.c     **** }
+ 2408              		.loc 1 132 0
+ 2409 0278 1CD04BE2 		sub	sp, fp, #28
+ 2410 027c 0F689DE8 		ldmfd	sp, {r0, r1, r2, r3, fp, sp, lr}
+ 2411 0280 04C09DE4 		ldmfd	sp!, {ip}
+ 2412 0284 04F05EE2 		subs	pc, lr, #4
+ 2413              	.L21:
+ 2414              		.align	2
+ 2415              	.L20:
+ 2416 0288 1C010000 		.word	.LC12
+ 2417 028c 2C010000 		.word	.LC13
+ 2418 0290 3C010000 		.word	.LC14
+ 2419 0294 14010000 		.word	.LC11
+ 2420 0298 5400D201 		.word	30539860
+ 2421 029c 64010000 		.word	.LC15
+ 2422 02a0 2400E001 		.word	31457316
+ 2423              		.cfi_endproc
+ 2424              	.LFE2:
+ 2426              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 lab6.c
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2059   .rodata:00000000 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2081   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2084   .text:00000000 main
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2176   .text:000000c0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2208   .text:000000e4 isr_keypad
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2313   .text:000001a0 isr_pb
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2205   .text:000000e4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2287   .text:00000188 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2310   .text:000001a0 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccv6RJHy.s:2416   .text:00000288 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sys_init
+uart0_init
+keypad_init
+pbs_init
+uart0_puts
+pb_wait_keydown
+keypad_wait_any_keydown
+keypad_wait_keydown
+pb_wait_keyup
+keypad_wait_any_keyup
+keypad_wait_keyup
+keypad_open
+pbs_open
+keypad_getchartime
+uart0_puthex
+uart0_putint
+pb_getchartime

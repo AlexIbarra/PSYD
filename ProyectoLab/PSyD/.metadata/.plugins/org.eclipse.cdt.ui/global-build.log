@@ -1,35 +1,75 @@
-09:47:17 **** Build of configuration Debug for project lab5 ****
+10:16:38 **** Build of configuration Debug for project lab8 ****
 cs-make all 
-'Building file: ../lab5.c'
+'Building file: ../lab8.c'
 'Invoking: ARM Sourcery Windows GCC C Compiler'
-arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab5.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab5.d" -MT"lab5.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab5.o" "../lab5.c"
-../lab5.c:25:6: warning: return type of 'main' is not 'int'
-'Finished building: ../lab5.c'
+arm-none-eabi-gcc -I../../BSP/include -O0 -Wall -Wa,-adhlns="lab8.o.lst" -c -fmessage-length=0 -mapcs-frame -MMD -MP -MF"lab8.d" -MT"lab8.d" -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab8.o" "../lab8.c"
+../lab8.c:29:6: warning: return type of 'main' is not 'int'
+'Finished building: ../lab8.c'
 ' '
-'Building target: lab5.elf'
+'Building target: lab8.elf'
 'Invoking: ARM Sourcery Windows GCC C Linker'
-arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab4\lab.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab5.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab5.elf"  ./lab5.o   -lBSP
-'Finished building target: lab5.elf'
+arm-none-eabi-gcc -T"C:\hlocal\PSyD\lab8\lab.ld" -nostartfiles -L../../BSP/Debug -Wl,-Map,lab8.map -mcpu=arm7tdmi -g3 -gdwarf-2 -o "lab8.elf"  ./lab8.o   -lBSP
+'Finished building target: lab8.elf'
 ' '
 'Invoking: ARM Sourcery Windows GNU Create Flash Image'
-arm-none-eabi-objcopy -O binary lab5.elf  "lab5.hex"
-'Finished building: lab5.hex'
+arm-none-eabi-objcopy -O binary lab8.elf  "lab8.hex"
+'Finished building: lab8.hex'
 ' '
 'Invoking: ARM Sourcery Windows GNU Create Listing'
-arm-none-eabi-objdump -h -S lab5.elf > "lab5.lst"
-'Finished building: lab5.lst'
+arm-none-eabi-objdump -h -S lab8.elf > "lab8.lst"
+'Finished building: lab8.lst'
 ' '
 'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
+arm-none-eabi-size  --format=berkeley lab8.elf
    text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
 ' '
-09:47:29 **** Incremental Build of configuration Debug for project lab5 ****
+10:16:43 **** Incremental Build of configuration Debug for project lab8 ****
 cs-make all 
 'Invoking: ARM Sourcery Windows GNU Print Size'
-arm-none-eabi-size  --format=berkeley lab5.elf
+arm-none-eabi-size  --format=berkeley lab8.elf
    text	   data	    bss	    dec	    hex	filename
-   9424	      0	      0	   9424	   24d0	lab5.elf
-'Finished building: lab5.siz'
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
+' '
+10:19:29 **** Incremental Build of configuration Debug for project lab8 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab8.elf
+   text	   data	    bss	    dec	    hex	filename
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
+' '
+10:20:56 **** Incremental Build of configuration Debug for project lab8 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab8.elf
+   text	   data	    bss	    dec	    hex	filename
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
+' '
+10:26:19 **** Incremental Build of configuration Debug for project lab8 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab8.elf
+   text	   data	    bss	    dec	    hex	filename
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
+' '
+10:27:18 **** Incremental Build of configuration Debug for project lab8 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab8.elf
+   text	   data	    bss	    dec	    hex	filename
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
+' '
+10:30:15 **** Incremental Build of configuration Debug for project lab8 ****
+cs-make all 
+'Invoking: ARM Sourcery Windows GNU Print Size'
+arm-none-eabi-size  --format=berkeley lab8.elf
+   text	   data	    bss	    dec	    hex	filename
+  12548	      0	      8	  12556	   310c	lab8.elf
+'Finished building: lab8.siz'
 ' '

@@ -963,21 +963,21 @@
  2704              	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 rtc.c
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:1882   .text:00000000 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:1885   .text:00000000 rtc_init
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:1983   .text:000000f8 $d
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2004   .text:00000140 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2007   .text:00000140 rtc_puttime
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2247   .text:00000444 $d
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2259   .text:00000468 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2262   .text:00000468 rtc_gettime
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2586   .text:000008e8 $d
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2597   .text:00000908 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2600   .text:00000908 rtc_open
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2649   .text:00000974 $d
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2656   .text:00000984 $a
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2659   .text:00000984 rtc_close
-C:\Users\USUARI~1\AppData\Local\Temp\cc3Fn2BA.s:2697   .text:000009c8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:1882   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:1885   .text:00000000 rtc_init
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:1983   .text:000000f8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2004   .text:00000140 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2007   .text:00000140 rtc_puttime
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2247   .text:00000444 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2259   .text:00000468 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2262   .text:00000468 rtc_gettime
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2586   .text:000008e8 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2597   .text:00000908 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2600   .text:00000908 rtc_open
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2649   .text:00000974 $d
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2656   .text:00000984 $a
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2659   .text:00000984 rtc_close
+C:\Users\USUARI~1\AppData\Local\Temp\ccY8FNVI.s:2697   .text:000009c8 $d
                      .debug_frame:00000010 $d
 
 UNDEFINED SYMBOLS

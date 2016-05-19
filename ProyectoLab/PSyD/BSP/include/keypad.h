@@ -116,4 +116,8 @@ void keypad_open( void (*isr)(void) );
 */
 void keypad_close( void );
 
+void keypad_up_isr( void );
+
+void keypad_down_isr( void );
+
 #endif

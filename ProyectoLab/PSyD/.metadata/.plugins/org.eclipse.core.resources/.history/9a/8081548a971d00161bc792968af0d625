@@ -1,0 +1,384 @@
+   1              		.cpu arm7tdmi
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 18, 4
+  11              		.file	"iic.c"
+  21              	.Ltext0:
+  22              		.file 1 "../src/iic.c"
+ 1894              		.align	2
+ 1895              		.global	iic_init
+ 1897              	iic_init:
+ 1898              	.LFB0:
+   1:../src/iic.c  **** /*-------------------------------------------------------------------
+   2:../src/iic.c  **** **
+   3:../src/iic.c  **** **  Fichero:
+   4:../src/iic.c  **** **    iic.h  5/3/2015
+   5:../src/iic.c  **** **
+   6:../src/iic.c  **** **    (c) J.M. Mendias
+   7:../src/iic.c  **** **    Programación de Sistemas y Dispositivos
+   8:../src/iic.c  **** **    Facultad de Informática. Universidad Complutense de Madrid
+   9:../src/iic.c  **** **
+  10:../src/iic.c  **** **  Propósito:
+  11:../src/iic.c  **** **    Contiene las definiciones de los prototipos de funciones
+  12:../src/iic.c  **** **    para la comunicación por el bus IIC del chip S3C44BOX
+  13:../src/iic.c  **** **
+  14:../src/iic.c  **** **  Notas de diseño:
+  15:../src/iic.c  **** **
+  16:../src/iic.c  **** **-----------------------------------------------------------------*/
+  17:../src/iic.c  **** 
+  18:../src/iic.c  **** #include <iic.h>
+  19:../src/iic.c  **** #include <s3c44b0x.h>
+  20:../src/iic.c  **** #include <s3cev40.h>
+  21:../src/iic.c  **** 
+  22:../src/iic.c  **** /*
+  23:../src/iic.c  **** ** Configura el controlador de IIC según los siguientes parámetros
+  24:../src/iic.c  **** **   Interrupciones: habilitadas
+  25:../src/iic.c  **** **   Transmisión/recepción: activada
+  26:../src/iic.c  **** **   Frecuencia de comunicación: 250 KHz
+  27:../src/iic.c  **** **   Generación de ACK: automática
+  28:../src/iic.c  **** */
+  29:../src/iic.c  **** void iic_init( void ){
+ 1899              		.loc 1 29 0
+ 1900              		.cfi_startproc
+ 1901              		@ Function supports interworking.
+ 1902              		@ args = 0, pretend = 0, frame = 0
+ 1903              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1904 0000 0DC0A0E1 		mov	ip, sp
+ 1905              	.LCFI0:
+ 1906              		.cfi_def_cfa_register 12
+ 1907 0004 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1908 0008 04B04CE2 		sub	fp, ip, #4
+ 1909              		.cfi_offset 14, -8
+ 1910              		.cfi_offset 13, -12
+ 1911              		.cfi_offset 11, -16
+ 1912              	.LCFI1:
+ 1913              		.cfi_def_cfa 11, 4
+  30:../src/iic.c  **** 	IICADD = 0x0;
+ 1914              		.loc 1 30 0
+ 1915 000c 28309FE5 		ldr	r3, .L2
+ 1916 0010 0020A0E3 		mov	r2, #0
+ 1917 0014 002083E5 		str	r2, [r3, #0]
+  31:../src/iic.c  **** 	IICCON = 0xAF;
+ 1918              		.loc 1 31 0
+ 1919 0018 20309FE5 		ldr	r3, .L2+4
+ 1920 001c AF20A0E3 		mov	r2, #175
+ 1921 0020 002083E5 		str	r2, [r3, #0]
+  32:../src/iic.c  **** 	IICSTAT = 0x10;
+ 1922              		.loc 1 32 0
+ 1923 0024 18309FE5 		ldr	r3, .L2+8
+ 1924 0028 1020A0E3 		mov	r2, #16
+ 1925 002c 002083E5 		str	r2, [r3, #0]
+  33:../src/iic.c  **** }
+ 1926              		.loc 1 33 0
+ 1927 0030 0CD04BE2 		sub	sp, fp, #12
+ 1928 0034 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1929 0038 1EFF2FE1 		bx	lr
+ 1930              	.L3:
+ 1931              		.align	2
+ 1932              	.L2:
+ 1933 003c 0800D601 		.word	30801928
+ 1934 0040 0000D601 		.word	30801920
+ 1935 0044 0400D601 		.word	30801924
+ 1936              		.cfi_endproc
+ 1937              	.LFE0:
+ 1939              		.align	2
+ 1940              		.global	iic_start
+ 1942              	iic_start:
+ 1943              	.LFB1:
+  34:../src/iic.c  **** 
+  35:../src/iic.c  **** /*
+  36:../src/iic.c  **** ** Inicia un flujo de transmición/recepción en la que el microcontrolador actúa como master:
+  37:../src/iic.c  **** **   Genenera la START condition
+  38:../src/iic.c  **** **   Envía la dirección del dispositivo esclavo
+  39:../src/iic.c  **** **   Espera la recepción de ACK
+  40:../src/iic.c  **** */
+  41:../src/iic.c  **** void iic_start( uint8 mode, uint8 byte ){
+ 1944              		.loc 1 41 0
+ 1945              		.cfi_startproc
+ 1946              		@ Function supports interworking.
+ 1947              		@ args = 0, pretend = 0, frame = 8
+ 1948              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1949 0048 0DC0A0E1 		mov	ip, sp
+ 1950              	.LCFI2:
+ 1951              		.cfi_def_cfa_register 12
+ 1952 004c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 1953 0050 04B04CE2 		sub	fp, ip, #4
+ 1954              		.cfi_offset 14, -8
+ 1955              		.cfi_offset 13, -12
+ 1956              		.cfi_offset 11, -16
+ 1957              	.LCFI3:
+ 1958              		.cfi_def_cfa 11, 4
+ 1959 0054 08D04DE2 		sub	sp, sp, #8
+ 1960 0058 0020A0E1 		mov	r2, r0
+ 1961 005c 0130A0E1 		mov	r3, r1
+ 1962 0060 0D204BE5 		strb	r2, [fp, #-13]
+ 1963 0064 0E304BE5 		strb	r3, [fp, #-14]
+  42:../src/iic.c  **** 	IICDS = byte;
+ 1964              		.loc 1 42 0
+ 1965 0068 50309FE5 		ldr	r3, .L6
+ 1966 006c 0E205BE5 		ldrb	r2, [fp, #-14]	@ zero_extendqisi2
+ 1967 0070 002083E5 		str	r2, [r3, #0]
+  43:../src/iic.c  **** 	IICSTAT = (mode << 6)| (1 << 4) | (1 << 5);
+ 1968              		.loc 1 43 0
+ 1969 0074 48309FE5 		ldr	r3, .L6+4
+ 1970 0078 0D205BE5 		ldrb	r2, [fp, #-13]	@ zero_extendqisi2
+ 1971 007c 0223A0E1 		mov	r2, r2, asl #6
+ 1972 0080 302082E3 		orr	r2, r2, #48
+ 1973 0084 002083E5 		str	r2, [r3, #0]
+  44:../src/iic.c  **** 	IICCON &= ~(1<<4);
+ 1974              		.loc 1 44 0
+ 1975 0088 38309FE5 		ldr	r3, .L6+8
+ 1976 008c 34209FE5 		ldr	r2, .L6+8
+ 1977 0090 002092E5 		ldr	r2, [r2, #0]
+ 1978 0094 1020C2E3 		bic	r2, r2, #16
+ 1979 0098 002083E5 		str	r2, [r3, #0]
+  45:../src/iic.c  **** 	while((IICCON & (1<<4)) == 0);
+ 1980              		.loc 1 45 0
+ 1981 009c 0000A0E1 		mov	r0, r0	@ nop
+ 1982              	.L5:
+ 1983              		.loc 1 45 0 is_stmt 0 discriminator 1
+ 1984 00a0 20309FE5 		ldr	r3, .L6+8
+ 1985 00a4 003093E5 		ldr	r3, [r3, #0]
+ 1986 00a8 103003E2 		and	r3, r3, #16
+ 1987 00ac 000053E3 		cmp	r3, #0
+ 1988 00b0 FAFFFF0A 		beq	.L5
+  46:../src/iic.c  **** }
+ 1989              		.loc 1 46 0 is_stmt 1
+ 1990 00b4 0CD04BE2 		sub	sp, fp, #12
+ 1991 00b8 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 1992 00bc 1EFF2FE1 		bx	lr
+ 1993              	.L7:
+ 1994              		.align	2
+ 1995              	.L6:
+ 1996 00c0 0C00D601 		.word	30801932
+ 1997 00c4 0400D601 		.word	30801924
+ 1998 00c8 0000D601 		.word	30801920
+ 1999              		.cfi_endproc
+ 2000              	.LFE1:
+ 2002              		.align	2
+ 2003              		.global	iic_putByte
+ 2005              	iic_putByte:
+ 2006              	.LFB2:
+  47:../src/iic.c  **** 
+  48:../src/iic.c  **** /*
+  49:../src/iic.c  **** ** Actuando el microcontrolador como master:
+  50:../src/iic.c  **** **   Envía el byte indicado
+  51:../src/iic.c  **** **   Espera la recepción de ACK
+  52:../src/iic.c  **** */
+  53:../src/iic.c  **** void iic_putByte( uint8 byte ){
+ 2007              		.loc 1 53 0
+ 2008              		.cfi_startproc
+ 2009              		@ Function supports interworking.
+ 2010              		@ args = 0, pretend = 0, frame = 8
+ 2011              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2012 00cc 0DC0A0E1 		mov	ip, sp
+ 2013              	.LCFI4:
+ 2014              		.cfi_def_cfa_register 12
+ 2015 00d0 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2016 00d4 04B04CE2 		sub	fp, ip, #4
+ 2017              		.cfi_offset 14, -8
+ 2018              		.cfi_offset 13, -12
+ 2019              		.cfi_offset 11, -16
+ 2020              	.LCFI5:
+ 2021              		.cfi_def_cfa 11, 4
+ 2022 00d8 08D04DE2 		sub	sp, sp, #8
+ 2023 00dc 0030A0E1 		mov	r3, r0
+ 2024 00e0 0D304BE5 		strb	r3, [fp, #-13]
+  54:../src/iic.c  **** 	IICDS = byte;
+ 2025              		.loc 1 54 0
+ 2026 00e4 54309FE5 		ldr	r3, .L10
+ 2027 00e8 0D205BE5 		ldrb	r2, [fp, #-13]	@ zero_extendqisi2
+ 2028 00ec 002083E5 		str	r2, [r3, #0]
+  55:../src/iic.c  **** 	IICCON &= IICCON &= ~(1<<4);
+ 2029              		.loc 1 55 0
+ 2030 00f0 4C209FE5 		ldr	r2, .L10+4
+ 2031 00f4 48309FE5 		ldr	r3, .L10+4
+ 2032 00f8 001093E5 		ldr	r1, [r3, #0]
+ 2033 00fc 40309FE5 		ldr	r3, .L10+4
+ 2034 0100 3C009FE5 		ldr	r0, .L10+4
+ 2035 0104 000090E5 		ldr	r0, [r0, #0]
+ 2036 0108 1000C0E3 		bic	r0, r0, #16
+ 2037 010c 000083E5 		str	r0, [r3, #0]
+ 2038 0110 003093E5 		ldr	r3, [r3, #0]
+ 2039 0114 033001E0 		and	r3, r1, r3
+ 2040 0118 003082E5 		str	r3, [r2, #0]
+  56:../src/iic.c  **** 	while((IICCON & (1<<4)) != (1<<4));
+ 2041              		.loc 1 56 0
+ 2042 011c 0000A0E1 		mov	r0, r0	@ nop
+ 2043              	.L9:
+ 2044              		.loc 1 56 0 is_stmt 0 discriminator 1
+ 2045 0120 1C309FE5 		ldr	r3, .L10+4
+ 2046 0124 003093E5 		ldr	r3, [r3, #0]
+ 2047 0128 103003E2 		and	r3, r3, #16
+ 2048 012c 000053E3 		cmp	r3, #0
+ 2049 0130 FAFFFF0A 		beq	.L9
+  57:../src/iic.c  **** }
+ 2050              		.loc 1 57 0 is_stmt 1
+ 2051 0134 0CD04BE2 		sub	sp, fp, #12
+ 2052 0138 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2053 013c 1EFF2FE1 		bx	lr
+ 2054              	.L11:
+ 2055              		.align	2
+ 2056              	.L10:
+ 2057 0140 0C00D601 		.word	30801932
+ 2058 0144 0000D601 		.word	30801920
+ 2059              		.cfi_endproc
+ 2060              	.LFE2:
+ 2062              		.align	2
+ 2063              		.global	iic_getByte
+ 2065              	iic_getByte:
+ 2066              	.LFB3:
+  58:../src/iic.c  **** 
+  59:../src/iic.c  **** /*
+  60:../src/iic.c  **** ** Actuando el microcontrolador como master:
+  61:../src/iic.c  **** **   Espera la recepción de un byte
+  62:../src/iic.c  **** **   Genera o no ACK
+  63:../src/iic.c  **** **   Devuelve el byte recibido
+  64:../src/iic.c  **** */
+  65:../src/iic.c  **** uint8 iic_getByte( uint8 ack ){
+ 2067              		.loc 1 65 0
+ 2068              		.cfi_startproc
+ 2069              		@ Function supports interworking.
+ 2070              		@ args = 0, pretend = 0, frame = 8
+ 2071              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2072 0148 0DC0A0E1 		mov	ip, sp
+ 2073              	.LCFI6:
+ 2074              		.cfi_def_cfa_register 12
+ 2075 014c 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2076 0150 04B04CE2 		sub	fp, ip, #4
+ 2077              		.cfi_offset 14, -8
+ 2078              		.cfi_offset 13, -12
+ 2079              		.cfi_offset 11, -16
+ 2080              	.LCFI7:
+ 2081              		.cfi_def_cfa 11, 4
+ 2082 0154 08D04DE2 		sub	sp, sp, #8
+ 2083 0158 0030A0E1 		mov	r3, r0
+ 2084 015c 0D304BE5 		strb	r3, [fp, #-13]
+  66:../src/iic.c  **** 	IICCON |= (1<<7);
+ 2085              		.loc 1 66 0
+ 2086 0160 54309FE5 		ldr	r3, .L14
+ 2087 0164 50209FE5 		ldr	r2, .L14
+ 2088 0168 002092E5 		ldr	r2, [r2, #0]
+ 2089 016c 802082E3 		orr	r2, r2, #128
+ 2090 0170 002083E5 		str	r2, [r3, #0]
+  67:../src/iic.c  **** 	IICCON &= ~(1<<4);
+ 2091              		.loc 1 67 0
+ 2092 0174 40309FE5 		ldr	r3, .L14
+ 2093 0178 3C209FE5 		ldr	r2, .L14
+ 2094 017c 002092E5 		ldr	r2, [r2, #0]
+ 2095 0180 1020C2E3 		bic	r2, r2, #16
+ 2096 0184 002083E5 		str	r2, [r3, #0]
+  68:../src/iic.c  **** 	while((IICCON & (1<<4)) != (1<<4));
+ 2097              		.loc 1 68 0
+ 2098 0188 0000A0E1 		mov	r0, r0	@ nop
+ 2099              	.L13:
+ 2100              		.loc 1 68 0 is_stmt 0 discriminator 1
+ 2101 018c 28309FE5 		ldr	r3, .L14
+ 2102 0190 003093E5 		ldr	r3, [r3, #0]
+ 2103 0194 103003E2 		and	r3, r3, #16
+ 2104 0198 000053E3 		cmp	r3, #0
+ 2105 019c FAFFFF0A 		beq	.L13
+  69:../src/iic.c  **** 	return IICDS;
+ 2106              		.loc 1 69 0 is_stmt 1
+ 2107 01a0 18309FE5 		ldr	r3, .L14+4
+ 2108 01a4 003093E5 		ldr	r3, [r3, #0]
+ 2109 01a8 FF3003E2 		and	r3, r3, #255
+  70:../src/iic.c  **** }
+ 2110              		.loc 1 70 0
+ 2111 01ac 0300A0E1 		mov	r0, r3
+ 2112 01b0 0CD04BE2 		sub	sp, fp, #12
+ 2113 01b4 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2114 01b8 1EFF2FE1 		bx	lr
+ 2115              	.L15:
+ 2116              		.align	2
+ 2117              	.L14:
+ 2118 01bc 0000D601 		.word	30801920
+ 2119 01c0 0C00D601 		.word	30801932
+ 2120              		.cfi_endproc
+ 2121              	.LFE3:
+ 2123              		.align	2
+ 2124              		.global	iic_stop
+ 2126              	iic_stop:
+ 2127              	.LFB4:
+  71:../src/iic.c  **** 
+  72:../src/iic.c  **** /*
+  73:../src/iic.c  **** ** Envía la stop condition y espera los ms indicados para que haga efecto
+  74:../src/iic.c  **** */
+  75:../src/iic.c  **** void iic_stop( uint16 ms ){
+ 2128              		.loc 1 75 0
+ 2129              		.cfi_startproc
+ 2130              		@ Function supports interworking.
+ 2131              		@ args = 0, pretend = 0, frame = 8
+ 2132              		@ frame_needed = 1, uses_anonymous_args = 0
+ 2133 01c4 0DC0A0E1 		mov	ip, sp
+ 2134              	.LCFI8:
+ 2135              		.cfi_def_cfa_register 12
+ 2136 01c8 00D82DE9 		stmfd	sp!, {fp, ip, lr, pc}
+ 2137 01cc 04B04CE2 		sub	fp, ip, #4
+ 2138              		.cfi_offset 14, -8
+ 2139              		.cfi_offset 13, -12
+ 2140              		.cfi_offset 11, -16
+ 2141              	.LCFI9:
+ 2142              		.cfi_def_cfa 11, 4
+ 2143 01d0 08D04DE2 		sub	sp, sp, #8
+ 2144 01d4 0030A0E1 		mov	r3, r0
+ 2145 01d8 BE304BE1 		strh	r3, [fp, #-14]	@ movhi
+  76:../src/iic.c  **** 	IICSTAT &= ~(1<<5);
+ 2146              		.loc 1 76 0
+ 2147 01dc 38309FE5 		ldr	r3, .L17
+ 2148 01e0 34209FE5 		ldr	r2, .L17
+ 2149 01e4 002092E5 		ldr	r2, [r2, #0]
+ 2150 01e8 2020C2E3 		bic	r2, r2, #32
+ 2151 01ec 002083E5 		str	r2, [r3, #0]
+  77:../src/iic.c  **** 	IICCON &= ~(1<<4);
+ 2152              		.loc 1 77 0
+ 2153 01f0 28309FE5 		ldr	r3, .L17+4
+ 2154 01f4 24209FE5 		ldr	r2, .L17+4
+ 2155 01f8 002092E5 		ldr	r2, [r2, #0]
+ 2156 01fc 1020C2E3 		bic	r2, r2, #16
+ 2157 0200 002083E5 		str	r2, [r3, #0]
+  78:../src/iic.c  **** 	sw_delay_ms(ms);
+ 2158              		.loc 1 78 0
+ 2159 0204 BE305BE1 		ldrh	r3, [fp, #-14]
+ 2160 0208 0300A0E1 		mov	r0, r3
+ 2161 020c FEFFFFEB 		bl	sw_delay_ms
+  79:../src/iic.c  **** }
+ 2162              		.loc 1 79 0
+ 2163 0210 0CD04BE2 		sub	sp, fp, #12
+ 2164 0214 00689DE8 		ldmfd	sp, {fp, sp, lr}
+ 2165 0218 1EFF2FE1 		bx	lr
+ 2166              	.L18:
+ 2167              		.align	2
+ 2168              	.L17:
+ 2169 021c 0400D601 		.word	30801924
+ 2170 0220 0000D601 		.word	30801920
+ 2171              		.cfi_endproc
+ 2172              	.LFE4:
+ 2174              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 iic.c
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1894   .text:00000000 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1897   .text:00000000 iic_init
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1933   .text:0000003c $d
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1939   .text:00000048 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1942   .text:00000048 iic_start
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:1996   .text:000000c0 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2002   .text:000000cc $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2005   .text:000000cc iic_putByte
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2057   .text:00000140 $d
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2062   .text:00000148 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2065   .text:00000148 iic_getByte
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2118   .text:000001bc $d
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2123   .text:000001c4 $a
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2126   .text:000001c4 iic_stop
+C:\Users\USUARI~1\AppData\Local\Temp\cc3Mz1ME.s:2169   .text:0000021c $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sw_delay_ms

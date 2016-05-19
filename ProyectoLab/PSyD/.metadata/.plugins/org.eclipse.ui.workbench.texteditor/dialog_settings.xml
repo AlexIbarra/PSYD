@@ -13,7 +13,10 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
+			<item value="iic_start"/>
+			<item value="wait_for"/>
 			<item value=" "/>
 		</list>
 		<list key="replacehistory">
